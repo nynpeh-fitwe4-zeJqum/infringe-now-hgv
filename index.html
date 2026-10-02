@@ -6,105 +6,173 @@
 <meta name="theme-color" content="#071018">
 <title>Infringe Now HGV</title>
 <style>
-:root{--green:#12c866;--navy:#071018;--ink:#17232c;--muted:#6d7881;--bg:#f3f6f7}
-*{box-sizing:border-box}body{margin:0;background:#000;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--ink)}
-.app{max-width:430px;min-height:100vh;margin:auto;background:var(--bg)}
-.top{background:var(--navy);color:#fff;padding:20px 18px 16px;position:sticky;top:0;z-index:10}.brand{font-size:22px;font-weight:900;letter-spacing:.3px}.brand b{color:var(--green)}.tag{font-size:12px;color:#b7c1c8;margin-top:3px}
-main{padding:20px 16px 95px}.screen{display:none}.screen.active{display:block}
-h1{font-size:28px;line-height:1.05;margin:3px 0 8px}.sub{color:var(--muted);margin:0 0 18px}
-.card{background:#fff;border-radius:18px;padding:16px;margin:0 0 14px;box-shadow:0 5px 18px rgba(20,35,45,.07)}
-.btn{width:100%;border:0;border-radius:13px;padding:16px 14px;font-size:15px;font-weight:850;margin:5px 0;cursor:pointer}.green{background:var(--green);color:#fff}.dark{background:#10212c;color:#fff}.outline{background:#fff;border:1px solid #d7dfe4;text-align:left;color:var(--ink)}
-.choice{padding:15px;border:1px solid #d7dfe4;border-radius:13px;background:#fff;margin:9px 0;cursor:pointer}.choice strong{display:block}.choice span{font-size:12px;color:var(--muted)}.choice.selected{border:2px solid var(--green);background:#effbf5}
-label{font-size:12px;font-weight:800;color:#53616a;display:block;margin:13px 0 6px}input,textarea,select{width:100%;font:inherit;padding:12px;border:1px solid #d6dee3;border-radius:11px;background:#fff}textarea{min-height:125px}
-.preview{min-height:220px;border-radius:14px;background:#e8ecee;display:flex;align-items:center;justify-content:center;text-align:center;color:#65727a;padding:20px}
-.badge{display:inline-block;background:#e9f9f0;color:#087c3f;border-radius:99px;padding:6px 9px;font-size:11px;font-weight:800}
-.row{display:flex;gap:10px}.stat{flex:1;background:#fff;border-radius:15px;padding:15px}.stat b{font-size:25px}.small{font-size:11px;color:#7a858d}
-.record{border-left:4px solid var(--green);cursor:pointer}.record b{font-size:14px}
-.success{text-align:center;padding:28px 10px}.check{font-size:58px;color:var(--green)}
-.nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);max-width:430px;width:100%;background:var(--navy);display:flex;justify-content:space-around;padding:10px 0 calc(10px + env(safe-area-inset-bottom));z-index:20}.nav button{background:none;border:0;color:#aeb9c0;font-size:11px}.nav .on{color:var(--green);font-weight:900}
-.attachment{margin-top:9px;padding:10px;border:1px solid #d6dee3;border-radius:10px}.thumb{max-width:100%;max-height:170px;border-radius:8px;margin-top:7px}
+:root{--green:#12c866;--navy:#071018;--ink:#17202b;--muted:#65707d;--line:#d7dfe8;--red:#d92d20}
+*{box-sizing:border-box}body{margin:0;background:#eef2f6;color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
+.app{max-width:480px;min-height:100vh;margin:auto;background:#fff}
+.top{background:var(--navy);color:#fff;padding:22px 18px 18px}
+.brand{font-weight:900;font-size:24px;letter-spacing:.3px}.tag{margin-top:5px;color:#b9c4cf;font-size:13px}
+main{padding:18px 16px 96px}.screen{display:none}.screen.active{display:block}
+h1{font-size:28px;line-height:1.1;margin:5px 0 10px}.sub{color:#66727f;line-height:1.45}
+.card{background:#fff;border:1px solid #d7dfe8;border-radius:18px;padding:16px;margin:14px 0;box-shadow:0 4px 16px #0b1b2a10}
+.btn{width:100%;border:0;border-radius:13px;padding:16px 14px;font-size:16px;font-weight:900;cursor:pointer;margin-top:10px}
+.primary{background:var(--green);color:#fff}.dark{background:var(--navy);color:#fff}.ghost{background:#eef2f6;color:var(--ink)}
+.choice{padding:14px;border:2px solid #d7dfe8;border-radius:14px;margin:10px 0;cursor:pointer}.choice.selected{border-color:var(--green);background:#effcf5}
+label{display:block;font-size:12px;font-weight:900;color:#53606d;margin:14px 0 6px;text-transform:uppercase}
+input,textarea,select{width:100%;padding:13px;border:1px solid #c8d1db;border-radius:11px;background:#fff;font-size:16px}
+textarea{min-height:100px;resize:vertical}.preview{width:100%;border-radius:14px;display:none;margin-top:12px;background:#111}
+.badge{display:inline-block;padding:7px 10px;border-radius:999px;background:#eaf8f0;color:#08783d;font-size:12px;font-weight:900}
+.warn{background:#fff5f3;border-left:4px solid var(--red);padding:12px;border-radius:8px;margin-top:12px}
+.statrow{display:flex;gap:10px}.stat{flex:1;background:#f5f7f9;border-radius:14px;padding:14px}.stat b{display:block;font-size:26px}
+.bottom{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(480px,100%);background:#071018;color:#fff;display:flex;gap:6px;padding:9px 10px calc(9px + env(safe-area-inset-bottom))}
+.bottom button{flex:1;background:transparent;color:#d9e1e9;border:0;padding:9px 4px;font-weight:800}.bottom button.active{color:#12c866}
+#video{width:100%;border-radius:14px;background:#000;display:none}.small{font-size:12px;color:#778390}.result{margin-top:12px}
 </style>
 </head>
 <body>
 <div class="app">
-<header class="top"><div class="brand">INFRINGE <b>NOW</b> HGV</div><div class="tag">Record it. Explain it. Prove it.</div></header>
+<header class="top"><div class="brand">INFRINGE NOW HGV</div><div class="tag">Record it. Explain it. Prove it.</div></header>
 
 <main>
 <section id="home" class="screen active">
 <h1>Good evening, Driver</h1><p class="sub">Your compliance. Your record.</p>
-<div class="card"><button class="btn green" onclick="go('scan')">📷 SCAN INFRINGEMENT</button><button class="btn dark" onclick="go('type')">＋ ADD RECORD MANUALLY</button></div>
-<div class="card"><b>MY COMPLIANCE</b><div class="row" style="margin-top:12px"><div class="stat"><b id="n">0</b><div class="small">Infringements</div></div><div class="stat"><b id="d">0</b><div class="small">Documents</div></div></div></div>
-<div id="recent"></div>
+<div class="statrow"><div class="stat"><b id="countInfr">0</b>Infringements</div><div class="stat"><b id="countDocs">0</b>Documents</div></div>
+<button class="btn primary" onclick="show('scan')">📷 SCAN INFRINGEMENT</button>
+<button class="btn dark" onclick="show('record')">＋ ADD RECORD MANUALLY</button>
+<div class="card"><span class="badge">BETA</span><h3>Driver-first compliance record</h3><p class="sub">Photograph a printout, read the text, review the possible issue and save the evidence with your explanation.</p></div>
 </section>
 
 <section id="scan" class="screen">
-<div class="card"><h1>Scan Printout</h1><p class="sub">Take a clear photo of the whole tachograph printout.</p><div class="preview">📷<br><br>Camera / photo selection<br><span class="small">On a real build this opens the phone camera.</span></div>
-<input id="photo" type="file" accept="image/*" capture="environment" onchange="attachScan(event)" style="margin-top:12px">
-<div id="scanPreview"></div><button class="btn green" onclick="go('type')">CONTINUE</button></div>
+<h1>Scan Printout</h1><p class="sub">Take a clear photo of the whole tachograph printout. The scanner will try to read the text and highlight possible issues for you to review.</p>
+<div class="card">
+<video id="video" playsinline></video>
+<canvas id="canvas" style="display:none"></canvas>
+<img id="preview" class="preview" alt="Printout preview">
+<input id="photo" type="file" accept="image/*" capture="environment" onchange="handlePhoto(event)">
+<button class="btn dark" id="cameraBtn" onclick="startCamera()">📷 USE CAMERA</button>
+<button class="btn ghost" id="captureBtn" style="display:none" onclick="capture()">CAPTURE PHOTO</button>
+<button class="btn primary" id="ocrBtn" style="display:none" onclick="runOCR()">🔍 READ PRINTout</button>
+<div id="ocrStatus" class="small result"></div>
+</div>
+<div id="ocrResult" class="card" style="display:none">
+<span class="badge">OCR REVIEW</span>
+<div id="possibleIssue" class="result"></div>
+<label>Detected text</label><textarea id="ocrText"></textarea>
+<p class="small">OCR can misread printouts. Treat this as a review aid, not a legal determination. Check the original printout and applicable tachograph rules before relying on the result.</p>
+<button class="btn primary" onclick="prepareFromScan()">CONTINUE TO RECORD</button>
+</div>
 </section>
 
-<section id="type" class="screen">
-<div class="card"><h1>What type of record is this?</h1><p class="sub">Choose the option that best describes the printout.</p>
-<div class="choice" onclick="pickType(this,'Tachograph infringement')">🚨 <strong>Tachograph infringement</strong><span>Something has been recorded as an infringement.</span></div>
-<div class="choice" onclick="pickType(this,'Manual-entry printout')">📝 <strong>Manual-entry printout</strong><span>A manual entry or written explanation.</span></div>
-<div class="choice" onclick="pickType(this,'Tachograph event / fault')">⚠️ <strong>Tachograph event / fault</strong><span>A fault, warning or unusual event.</span></div>
-<div class="choice" onclick="pickType(this,'Other record')">📄 <strong>Other record</strong><span>Anything else you want to keep on file.</span></div>
-<button class="btn green" onclick="go('details')">CONTINUE</button></div>
-</section>
-
-<section id="details" class="screen">
-<div class="card"><h1 id="detailTitle">Record details</h1>
+<section id="record" class="screen">
+<h1>Record details</h1>
+<div class="card">
+<label>Record type</label>
+<select id="type"><option>Tachograph infringement</option><option>Manual-entry printout</option><option>Tachograph event / fault</option><option>Other record</option></select>
 <label>Date</label><input id="date" type="date">
 <label>Time</label><input id="time" type="time">
-<label>Vehicle registration</label><input id="vehicle" placeholder="AB12 XYZ">
+<label>Vehicle registration</label><input id="reg" placeholder="AB12 XYZ" style="text-transform:uppercase">
 <label>Location</label><input id="location" placeholder="M5 Southbound">
-<label id="reasonLabel">What happened?</label><select id="reason"></select>
-<label>Recorded issue</label><input id="issue" placeholder="e.g. 18 minute excess driving time">
-<label>Your explanation</label><textarea id="explanation" placeholder="Tell us what happened in your own words."></textarea>
-<label>Supporting printout / document</label><input id="evidence" type="file" accept="image/*,.pdf" onchange="attachEvidence(event)">
-<div id="evidencePreview"></div>
-<button class="btn green" onclick="save()">SAVE RECORD</button></div>
-</section>
-
-<section id="saved" class="screen">
-<div class="card success"><div class="check">✓</div><h1>Record Saved</h1><p class="sub">Your record and supporting evidence have been saved in this prototype.</p><button class="btn green" onclick="openLast()">VIEW RECORD</button><button class="btn outline" onclick="go('home')">BACK HOME</button></div>
+<label>What happened?</label>
+<select id="happened"><option>Driving time issue</option><option>Break / rest issue</option><option>Daily rest issue</option><option>Weekly rest issue</option><option>Manual entry issue</option><option>Tachograph fault / event</option><option>Other</option></select>
+<label>Recorded issue</label><input id="issue" placeholder="e.g. possible excess driving time">
+<label>Your explanation</label><textarea id="explanation" placeholder="Explain what happened, including any relevant circumstances..."></textarea>
+<label>Supporting printout / document</label><input id="document" type="file" accept="image/*,.pdf">
+<button class="btn primary" onclick="saveRecord()">SAVE RECORD</button>
+<button class="btn ghost" onclick="show('home')">CANCEL</button>
+</div>
 </section>
 
 <section id="records" class="screen">
-<h1>My Records</h1><p class="sub">Your searchable compliance history.</p><div id="list"></div>
+<h1>My Records</h1><p class="sub">Your compliance history is stored on this device in this prototype.</p>
+<div id="recordList"></div>
 </section>
 
-<section id="detail" class="screen">
-<div class="card"><span class="badge">SAVED RECORD</span><h1 id="viewTitle"></h1><div id="viewBody"></div></div>
-<button class="btn dark" onclick="window.print()">📄 GENERATE / PRINT REPORT</button><button class="btn outline" onclick="go('records')">BACK TO RECORDS</button></section>
+<section id="saved" class="screen">
+<div class="card" style="text-align:center"><div style="font-size:42px">✓</div><h1>Record Saved</h1><p class="sub">Your record and supporting evidence have been saved on this device.</p>
+<button class="btn primary" onclick="show('records')">VIEW RECORDS</button><button class="btn ghost" onclick="show('home')">BACK HOME</button></div>
+</section>
 </main>
 
-<nav class="nav"><button id="homeNav" class="on" onclick="go('home')">⌂<br>Home</button><button onclick="go('records')">▣<br>Records</button><button onclick="go('scan')">＋<br>Scan</button></nav>
+<nav class="bottom">
+<button onclick="show('home')" id="navHome">⌂<br>Home</button>
+<button onclick="show('records')" id="navRecords">▣<br>Records</button>
+<button onclick="show('scan')" id="navScan">＋<br>Scan</button>
+</nav>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
 <script>
-let records=JSON.parse(localStorage.getItem('INFRINGE_NOW_HGV')||'[]'), selectedType='Tachograph infringement', lastId=null, scanFile=null, evidenceFile=null;
+let stream=null, lastImageData="", records=JSON.parse(localStorage.getItem("infringeRecords")||"[]");
 
-function go(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');render();window.scrollTo(0,0)}
-function pickType(el,type){document.querySelectorAll('.choice').forEach(x=>x.classList.remove('selected'));el.classList.add('selected');selectedType=type;populateReasons()}
-function populateReasons(){
- const r=document.getElementById('reason');let a=[];
- if(selectedType==='Tachograph infringement')a=['Traffic congestion','Accident','Road closure','Finding a safe stopping place','Customer delay','Loading delay','Unloading delay','Emergency','Unexpected circumstances','Other'];
- else if(selectedType==='Manual-entry printout')a=['Forgotten manual entry','Correction to recorded activity','Ferry / train journey','Other manual entry'];
- else if(selectedType==='Tachograph event / fault')a=['Tachograph fault','Driver card event','Power interruption','Sensor / motion event','Other event or fault'];
- else a=['Other record','Other circumstance'];
- r.innerHTML=a.map(x=>`<option>${x}</option>`).join('');
+function show(id){
+ document.querySelectorAll(".screen").forEach(x=>x.classList.remove("active"));
+ document.getElementById(id).classList.add("active");
+ document.querySelectorAll(".bottom button").forEach(x=>x.classList.remove("active"));
+ const nav={home:"navHome",records:"navRecords",scan:"navScan"}[id]; if(nav)document.getElementById(nav).classList.add("active");
+ if(id==="records")renderRecords();
+ if(id==="home")updateStats();
+ window.scrollTo({top:0,behavior:"smooth"});
 }
-function attachScan(e){scanFile=e.target.files[0]||null;document.getElementById('scanPreview').innerHTML=scanFile?`<div class="attachment">📎 ${esc(scanFile.name)}<br><span class="small">Printout attached to this record.</span></div>`:''}
-function attachEvidence(e){evidenceFile=e.target.files[0]||null;const b=document.getElementById('evidencePreview');b.innerHTML='';if(!evidenceFile)return;const reader=new FileReader();reader.onload=x=>{b.innerHTML=`<div class="attachment">📎 ${esc(evidenceFile.name)}${evidenceFile.type.startsWith('image/')?`<br><img class="thumb" src="${x.target.result}">`:''}</div>`};reader.readAsDataURL(evidenceFile)}
-function save(){
- const r={id:Date.now(),type:selectedType,date:document.getElementById('date').value,time:document.getElementById('time').value,vehicle:document.getElementById('vehicle').value,location:document.getElementById('location').value,reason:document.getElementById('reason').value,issue:document.getElementById('issue').value,explanation:document.getElementById('explanation').value,scanName:scanFile?.name||'',evidenceName:evidenceFile?.name||'',created:new Date().toLocaleString()};
- records.unshift(r);lastId=r.id;localStorage.setItem('INFRINGE_NOW_HGV',JSON.stringify(records));go('saved')
+function updateStats(){document.getElementById("countInfr").textContent=records.filter(r=>r.type==="Tachograph infringement").length;document.getElementById("countDocs").textContent=records.length}
+function handlePhoto(e){
+ const file=e.target.files[0]; if(!file)return;
+ const url=URL.createObjectURL(file); lastImageData=url;
+ const img=document.getElementById("preview");img.src=url;img.style.display="block";
+ document.getElementById("ocrBtn").style.display="block";document.getElementById("ocrStatus").textContent="Photo ready.";
 }
-function openLast(){openRecord(lastId)}
-function openRecord(id){const r=records.find(x=>x.id===id);if(!r)return;document.getElementById('viewTitle').textContent=`${r.type} • ${r.date||'No date'}`;document.getElementById('viewBody').innerHTML=`<p><b>Vehicle</b><br>${esc(r.vehicle||'Not recorded')}</p><p><b>Time</b><br>${esc(r.time||'Not recorded')}</p><p><b>Location</b><br>${esc(r.location||'Not recorded')}</p><p><b>Recorded issue</b><br>${esc(r.issue||'Not recorded')}</p><p><b>Circumstances</b><br>${esc(r.reason||'Not recorded')}</p><p><b>Driver's explanation</b><br>${esc(r.explanation||'None entered')}</p><p><b>Attachments</b><br>${esc(r.scanName||'No scan attached')}${r.evidenceName?' • '+esc(r.evidenceName):''}</p><p class="small">Record created: ${esc(r.created)}</p>`;go('detail')}
-function render(){document.getElementById('n').textContent=records.length;document.getElementById('d').textContent=records.filter(r=>r.scanName||r.evidenceName).length;document.getElementById('recent').innerHTML=records.slice(0,3).map(r=>`<div class="card record" onclick="openRecord(${r.id})"><b>${esc(r.type)}</b><br><span class="small">${esc(r.date||'')} • ${esc(r.vehicle||'')}</span></div>`).join('')||'<div class="card small">No records yet.</div>';document.getElementById('list').innerHTML=records.map(r=>`<div class="card record" onclick="openRecord(${r.id})"><b>${esc(r.issue||r.type)}</b><br><span class="small">${esc(r.date||'')} • ${esc(r.vehicle||'')} • ${esc(r.location||'')}</span></div>`).join('')||'<div class="card small">No saved records.</div>'}
-function esc(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
-const now=new Date(),pad=n=>String(n).padStart(2,'0');document.getElementById('date').value=`${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}`;document.getElementById('time').value=`${pad(now.getHours())}:${pad(now.getMinutes())}`;populateReasons();render();
+async function startCamera(){
+ try{
+  stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:"environment"}},audio:false});
+  const v=document.getElementById("video");v.srcObject=stream;v.style.display="block";await v.play();
+  document.getElementById("captureBtn").style.display="block";document.getElementById("cameraBtn").style.display="none";
+ }catch(e){alert("Camera access was not available. Use the photo picker instead.");}
+}
+function capture(){
+ const v=document.getElementById("video"),c=document.getElementById("canvas");
+ c.width=v.videoWidth;c.height=v.videoHeight;c.getContext("2d").drawImage(v,0,0);
+ lastImageData=c.toDataURL("image/jpeg",.9);
+ const img=document.getElementById("preview");img.src=lastImageData;img.style.display="block";
+ v.style.display="none";if(stream)stream.getTracks().forEach(t=>t.stop());
+ document.getElementById("captureBtn").style.display="none";document.getElementById("cameraBtn").style.display="block";document.getElementById("ocrBtn").style.display="block";
+}
+async function runOCR(){
+ if(!lastImageData)return;
+ const status=document.getElementById("ocrStatus");status.textContent="Reading printout... this can take a little while.";
+ try{
+  const {data}=await Tesseract.recognize(lastImageData,"eng",{logger:m=>{if(m.status==="recognizing text")status.textContent="Reading printout: "+Math.round((m.progress||0)*100)+"%";}});
+  document.getElementById("ocrText").value=data.text;
+  analyseText(data.text);
+  document.getElementById("ocrResult").style.display="block";status.textContent="Scan complete. Please review the result.";
+ }catch(e){status.textContent="OCR failed. You can still add the record manually."}
+}
+function analyseText(text){
+ const t=text.toLowerCase();
+ let findings=[];
+ if(/driv(e|ing).*?(9|10|11)\s*(h|hr|hours)/i.test(text)||/driving time/i.test(text))findings.push("Driving-time wording detected. Review the printout against the applicable daily/weekly driving limits.");
+ if(/break|rest/i.test(t))findings.push("Break/rest wording detected. Review the recorded break and rest periods.");
+ if(/infring|exceed|excess|violation|contravention/i.test(t))findings.push("Possible infringement/contravention wording detected.");
+ const box=document.getElementById("possibleIssue");
+ box.innerHTML=findings.length?'<div class="warn"><b>Possible issue to review</b><ul>'+findings.map(x=>"<li>"+x+"</li>").join("")+"</ul></div>":"<div class=\"badge\">No obvious infringement wording detected</div><p class=\"sub\">That does not mean the record is compliant. Review the original printout.</p>";
+}
+function prepareFromScan(){
+ document.getElementById("issue").value=document.getElementById("possibleIssue").innerText.replace(/\s+/g," ").slice(0,500);
+ document.getElementById("type").value="Tachograph infringement";
+ show("record");
+}
+function saveRecord(){
+ const r={id:Date.now(),type:document.getElementById("type").value,date:document.getElementById("date").value,time:document.getElementById("time").value,reg:document.getElementById("reg").value.toUpperCase(),location:document.getElementById("location").value,happened:document.getElementById("happened").value,issue:document.getElementById("issue").value,explanation:document.getElementById("explanation").value,created:new Date().toISOString()};
+ records.unshift(r);localStorage.setItem("infringeRecords",JSON.stringify(records));updateStats();show("saved");
+}
+function renderRecords(){
+ const el=document.getElementById("recordList");
+ if(!records.length){el.innerHTML='<div class="card"><h3>No records yet</h3><p class="sub">Your saved compliance records will appear here.</p></div>';return}
+ el.innerHTML=records.map(r=>'<div class="card"><span class="badge">'+esc(r.type)+'</span><h3>'+esc(r.issue||"Record")+'</h3><p class="sub">'+esc(r.date||"")+" "+esc(r.time||"")+" • "+esc(r.reg||"No vehicle")+'</p><p>'+esc(r.explanation||"No explanation added.")+'</p><button class="btn ghost" onclick="printRecord('+r.id+')">📄 PRINT REPORT</button></div>').join("");
+}
+function printRecord(id){
+ const r=records.find(x=>x.id===id);if(!r)return;
+ const w=window.open("","_blank");w.document.write('<html><head><title>Infringe Now HGV Report</title><style>body{font-family:Arial;padding:30px;max-width:800px;margin:auto}h1{color:#071018}hr{border:0;border-top:1px solid #ddd;margin:20px 0}.label{font-weight:bold;color:#555}</style></head><body><h1>INFRINGE NOW HGV</h1><h2>Compliance Record</h2><hr><p><span class="label">Type:</span> '+esc(r.type)+'</p><p><span class="label">Date:</span> '+esc(r.date)+' '+esc(r.time)+'</p><p><span class="label">Vehicle:</span> '+esc(r.reg)+'</p><p><span class="label">Location:</span> '+esc(r.location)+'</p><p><span class="label">What happened:</span> '+esc(r.happened)+'</p><p><span class="label">Recorded issue:</span> '+esc(r.issue)+'</p><p><span class="label">Driver explanation:</span><br>'+esc(r.explanation).replace(/\n/g,"<br>")+'</p><hr><p>Generated by Infringe Now HGV.</p><script>window.print()<\/script></body></html>');w.document.close();
+}
+function esc(s){return String(s||"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+updateStats();
 </script>
-</body></html>
+</body>
+</html>
