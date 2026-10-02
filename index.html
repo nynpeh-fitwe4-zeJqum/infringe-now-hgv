@@ -6,220 +6,110 @@
 <meta name="theme-color" content="#071018">
 <title>Infringe Now HGV</title>
 <style>
-:root{--green:#12c866;--navy:#071018;--ink:#17202b;--muted:#65707d;--line:#d7dfe8;--red:#d92d20}
-*{box-sizing:border-box}body{margin:0;background:#eef2f6;color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
-.app{max-width:480px;min-height:100vh;margin:auto;background:#fff}
-.top{background:var(--navy);color:#fff;padding:22px 18px 18px}
-.brand{font-weight:900;font-size:24px;letter-spacing:.3px}.tag{margin-top:5px;color:#b9c4cf;font-size:13px}
-main{padding:18px 16px 96px}.screen{display:none}.screen.active{display:block}
-h1{font-size:28px;line-height:1.1;margin:5px 0 10px}.sub{color:#66727f;line-height:1.45}
-.card{background:#fff;border:1px solid #d7dfe8;border-radius:18px;padding:16px;margin:14px 0;box-shadow:0 4px 16px #0b1b2a10}
-.btn{width:100%;border:0;border-radius:13px;padding:16px 14px;font-size:16px;font-weight:900;cursor:pointer;margin-top:10px}
-.primary{background:var(--green);color:#fff}.dark{background:var(--navy);color:#fff}.ghost{background:#eef2f6;color:var(--ink)}
-.choice{padding:14px;border:2px solid #d7dfe8;border-radius:14px;margin:10px 0;cursor:pointer}.choice.selected{border-color:var(--green);background:#effcf5}
-label{display:block;font-size:12px;font-weight:900;color:#53606d;margin:14px 0 6px;text-transform:uppercase}
-input,textarea,select{width:100%;padding:13px;border:1px solid #c8d1db;border-radius:11px;background:#fff;font-size:16px}
-textarea{min-height:100px;resize:vertical}.preview{width:100%;border-radius:14px;display:none;margin-top:12px;background:#111}
-.badge{display:inline-block;padding:7px 10px;border-radius:999px;background:#eaf8f0;color:#08783d;font-size:12px;font-weight:900}
-.warn{background:#fff5f3;border-left:4px solid var(--red);padding:12px;border-radius:8px;margin-top:12px}
-.statrow{display:flex;gap:10px}.stat{flex:1;background:#f5f7f9;border-radius:14px;padding:14px}.stat b{display:block;font-size:26px}
-.bottom{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(480px,100%);background:#071018;color:#fff;display:flex;gap:6px;padding:9px 10px calc(9px + env(safe-area-inset-bottom))}
-.bottom button{flex:1;background:transparent;color:#d9e1e9;border:0;padding:9px 4px;font-weight:800}.bottom button.active{color:#12c866}
-#video{width:100%;border-radius:14px;background:#000;display:none}.small{font-size:12px;color:#778390}.result{margin-top:12px}
+:root{--green:#12c866;--navy:#071018;--ink:#17202b;--muted:#66727f;--line:#d7dfe8;--red:#c62828;--amber:#a66500}
+*{box-sizing:border-box}body{margin:0;background:#edf2f6;color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}.app{max-width:500px;min-height:100vh;margin:auto;background:#fff}.top{background:var(--navy);color:#fff;padding:21px 18px 17px}.brand{font-size:24px;font-weight:900}.tag{font-size:13px;color:#b9c4cf;margin-top:4px}main{padding:17px 15px 100px}.screen{display:none}.screen.active{display:block}h1{font-size:28px;line-height:1.1;margin:5px 0 9px}h2{margin:0 0 8px}.sub{color:var(--muted);line-height:1.45}.card{border:1px solid var(--line);border-radius:18px;padding:16px;margin:13px 0;box-shadow:0 4px 16px #0710180d}.btn{width:100%;border:0;border-radius:13px;padding:15px;margin-top:9px;font-size:16px;font-weight:900}.primary{background:var(--green);color:#fff}.dark{background:var(--navy);color:#fff}.ghost{background:#eef2f6;color:var(--ink)}label{display:block;margin:13px 0 6px;font-size:12px;font-weight:900;color:#53606d;text-transform:uppercase}input,select,textarea{width:100%;padding:13px;border:1px solid #c8d1db;border-radius:11px;font-size:16px;background:#fff}textarea{min-height:120px}.badge{display:inline-block;padding:7px 10px;border-radius:999px;background:#eaf8f0;color:#08783d;font-size:12px;font-weight:900}.warn{background:#fff7e8;border-left:4px solid #d99000;padding:12px;border-radius:8px;margin-top:10px}.danger{background:#fff3f2;border-left:4px solid var(--red);padding:12px;border-radius:8px;margin-top:10px}.statrow{display:flex;gap:10px}.stat{flex:1;background:#f5f7f9;border-radius:14px;padding:13px}.stat b{font-size:25px;display:block}.small{font-size:12px;color:#778390}.preview{display:none;width:100%;border-radius:13px;margin-top:10px}.bottom{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(500px,100%);display:flex;background:var(--navy);padding:8px 8px calc(8px + env(safe-area-inset-bottom));z-index:4}.bottom button{flex:1;background:none;border:0;color:#d9e1e9;padding:8px 3px;font-weight:800}.bottom button.active{color:var(--green)}.pillrow{display:flex;gap:7px;flex-wrap:wrap}.choice{border:2px solid var(--line);border-radius:12px;padding:11px;flex:1;min-width:120px}.choice.selected{border-color:var(--green);background:#effcf5}.reportbox{background:#f7f9fb;border-radius:12px;padding:12px;white-space:pre-wrap}.record{border:1px solid var(--line);border-radius:16px;padding:14px;margin:10px 0}.photo-note{margin-top:8px}
 </style>
 </head>
 <body>
 <div class="app">
 <header class="top"><div class="brand">INFRINGE NOW HGV</div><div class="tag">Record it. Explain it. Prove it.</div></header>
-
 <main>
+
 <section id="home" class="screen active">
-<h1>Good evening, Driver</h1><p class="sub">Your compliance. Your record.</p>
-<div class="statrow"><div class="stat"><b id="countInfr">0</b>Infringements</div><div class="stat"><b id="countDocs">0</b>Documents</div></div>
+<h1>Driver compliance</h1><p class="sub">Keep your tachograph records, explanations and evidence together.</p>
+<div class="statrow"><div class="stat"><b id="nIssues">0</b>Potential issues</div><div class="stat"><b id="nRecords">0</b>Records</div></div>
 <button class="btn primary" onclick="show('scan')">📷 SCAN INFRINGEMENT</button>
-<button class="btn dark" onclick="show('record')">＋ ADD RECORD MANUALLY</button>
-<button class="btn ghost" onclick="show('calculator')">🧮 CHECK TACHO HOURS</button>
-<div class="card"><span class="badge">BETA</span><h3>Driver-first compliance record</h3><p class="sub">Photograph a printout, read the text, review the possible issue and save the evidence with your explanation.</p></div>
+<button class="btn dark" onclick="newRecord()">＋ ADD RECORD MANUALLY</button>
+<div class="card"><span class="badge">DRIVER-FIRST</span><h3>Always review before relying on a result</h3><p class="sub">The app records what was detected and what you say happened. It does not make a legal finding.</p></div>
 </section>
 
 <section id="scan" class="screen">
-<h1>Scan Printout</h1><p class="sub">Take a clear photo of the whole tachograph printout. The scanner will try to read the text and highlight possible issues for you to review.</p>
+<h1>Scan printout</h1><p class="sub">Take a clear photo of the complete printout, then review the text and possible issue.</p>
 <div class="card">
-<video id="video" playsinline></video>
-<canvas id="canvas" style="display:none"></canvas>
-<img id="preview" class="preview" alt="Printout preview">
-<input id="photo" type="file" accept="image/*" capture="environment" onchange="handlePhoto(event)">
-<button class="btn dark" id="cameraBtn" onclick="startCamera()">📷 USE CAMERA</button>
-<button class="btn ghost" id="captureBtn" style="display:none" onclick="capture()">CAPTURE PHOTO</button>
-<button class="btn primary" id="ocrBtn" style="display:none" onclick="runOCR()">🔍 READ PRINTout</button>
-<div id="ocrStatus" class="small result"></div>
+<input id="photo" type="file" accept="image/*" capture="environment" onchange="photoChosen(event)">
+<img id="preview" class="preview">
+<button class="btn dark" onclick="document.getElementById('photo').click()">📷 TAKE / CHOOSE PHOTO</button>
+<button class="btn primary" id="readBtn" style="display:none" onclick="readPrintout()">🔍 READ PRINTOUT</button>
+<div id="scanStatus" class="small photo-note"></div>
 </div>
-<div id="ocrResult" class="card" style="display:none">
-<span class="badge">OCR REVIEW</span>
-<div id="possibleIssue" class="result"></div>
+<div id="scanResult" class="card" style="display:none">
+<span class="badge">REVIEW REQUIRED</span>
+<div id="finding" class="warn"></div>
 <label>Detected text</label><textarea id="ocrText"></textarea>
-<p class="small">OCR can misread printouts. Treat this as a review aid, not a legal determination. Check the original printout and applicable tachograph rules before relying on the result.</p>
-<button class="btn primary" onclick="prepareFromScan()">CONTINUE TO RECORD</button>
+<p class="small">OCR can misread printouts. Check the original printout before treating any result as accurate.</p>
+<button class="btn primary" onclick="continueFromScan()">CONTINUE TO DRIVER EXPLANATION</button>
 </div>
 </section>
 
 <section id="record" class="screen">
-<h1>Record details</h1>
+<h1>Driver explanation</h1><p class="sub">This is your account of what happened. Add as much detail as you need.</p>
 <div class="card">
-<label>Record type</label>
-<select id="type"><option>Tachograph infringement</option><option>Manual-entry printout</option><option>Tachograph event / fault</option><option>Other record</option></select>
+<label>Record status</label>
+<div class="pillrow"><div class="choice selected">⚠️ Potential issue</div><div class="choice" onclick="selectNoIssue(this)">✓ No infringement / explanation</div></div>
+<input type="hidden" id="status" value="Potential issue">
+
+<label>Record type</label><select id="type"><option>Tachograph infringement</option><option>Manual-entry printout</option><option>Tachograph event / fault</option><option>Other record</option></select>
 <label>Date</label><input id="date" type="date">
 <label>Time</label><input id="time" type="time">
-<label>Vehicle registration</label><input id="reg" placeholder="AB12 XYZ" style="text-transform:uppercase">
-<label>Location</label><input id="location" placeholder="M5 Southbound">
-<label>What happened?</label>
-<select id="happened"><option>Driving time issue</option><option>Break / rest issue</option><option>Daily rest issue</option><option>Weekly rest issue</option><option>Manual entry issue</option><option>Tachograph fault / event</option><option>Other</option></select>
-<label>Recorded issue</label><input id="issue" placeholder="e.g. possible excess driving time">
-<label>Your explanation</label><textarea id="explanation" placeholder="Explain what happened, including any relevant circumstances..."></textarea>
-<label>Supporting printout / document</label><input id="document" type="file" accept="image/*,.pdf">
-<button class="btn primary" onclick="saveRecord()">SAVE RECORD</button>
+<label>Vehicle registration</label><input id="reg" placeholder="AB12 XYZ">
+<label>Location</label><input id="location" placeholder="M5 southbound / depot / town">
+<label>Possible issue / event</label><input id="issue" placeholder="What the printout appears to show">
+<label>What happened?</label><select id="happened"><option>Driving time issue</option><option>Break / rest issue</option><option>Daily rest issue</option><option>Weekly rest issue</option><option>Manual entry issue</option><option>Tachograph fault / event</option><option>Other</option></select>
+<label>Driver's explanation</label>
+<textarea id="explanation" placeholder="For example: traffic was stationary for 45 minutes, I took the required break when safe to stop, the tachograph was set incorrectly, or explain any other relevant circumstances..."></textarea>
+<label>What action did you take?</label>
+<textarea id="action" placeholder="For example: stopped at first safe opportunity, contacted transport office, made a manual entry, reported a tachograph fault..."></textarea>
+<label>Supporting evidence</label>
+<input id="evidence" type="file" accept="image/*,.pdf" onchange="evidenceChosen(event)">
+<div id="evidenceName" class="small"></div>
+<button class="btn primary" onclick="saveRecord()">💾 SAVE COMPLIANCE RECORD</button>
 <button class="btn ghost" onclick="show('home')">CANCEL</button>
 </div>
 </section>
 
 <section id="records" class="screen">
-<h1>My Records</h1><p class="sub">Your compliance history is stored on this device in this prototype.</p>
+<h1>My records</h1><p class="sub">Saved on this device. Keep the original printout/evidence as well.</p>
 <div id="recordList"></div>
 </section>
 
-<section id="saved" class="screen">
-<div class="card" style="text-align:center"><div style="font-size:42px">✓</div><h1>Record Saved</h1><p class="sub">Your record and supporting evidence have been saved on this device.</p>
-<button class="btn primary" onclick="show('records')">VIEW RECORDS</button><button class="btn ghost" onclick="show('home')">BACK HOME</button></div>
-</section>
-
-<section id="calculator" class="screen">
-<h1>Infringement Checker</h1><p class="sub">Enter the figures from the tachograph. The checker flags potential issues for review. It does not make a legal determination.</p>
-<div class="card">
-<label>Ruleset</label><select id="calcRules"><option value="assimilated">Assimilated / AETR goods vehicle rules</option><option value="domestic">GB domestic goods rules</option></select>
-<div id="assimilatedFields">
-<label>Driving today (hours)</label><input id="cDaily" type="number" min="0" max="24" step="0.01" placeholder="e.g. 9.25">
-<label>Driving this fixed week (hours)</label><input id="cWeekly" type="number" min="0" max="100" step="0.01" placeholder="e.g. 55">
-<label>Driving in previous + current fixed week (hours)</label><input id="cFortnight" type="number" min="0" max="120" step="0.01" placeholder="e.g. 88">
-<label>Driving before a qualifying break (hours)</label><input id="cBreakDrive" type="number" min="0" max="12" step="0.01" placeholder="e.g. 4.75">
-<label>Daily rest taken (hours)</label><input id="cRest" type="number" min="0" max="24" step="0.01" placeholder="e.g. 10.5">
-<label>Reduced daily rests used since the last weekly rest</label><input id="cReduced" type="number" min="0" max="10" step="1" placeholder="0 to 3">
-<label>Weekly rest taken (hours)</label><input id="cWeeklyRest" type="number" min="0" max="100" step="0.01" placeholder="e.g. 45">
-</div>
-<div id="domesticFields" style="display:none">
-<label>Driving today (hours)</label><input id="dDaily" type="number" min="0" max="24" step="0.01" placeholder="e.g. 10.5">
-<label>Duty today (hours)</label><input id="dDuty" type="number" min="0" max="24" step="0.01" placeholder="e.g. 11.5">
-</div>
-<button class="btn primary" onclick="checkCompliance()">CHECK FOR POTENTIAL INFRINGEMENTS</button>
-<div id="calcResult" class="result"></div>
-</div>
-<div class="card"><span class="badge">CURRENT RULE BASIS</span><p class="sub">For assimilated goods-vehicle rules, the standard limits include 9 hours daily driving, extendable to 10 hours twice in a fixed week, 56 hours weekly, 90 hours over two fixed weeks, 45 minutes after no more than 4.5 hours driving, and 11 hours regular daily rest with limited reductions to 9 hours.</p></div>
+<section id="detail" class="screen">
+<h1>Compliance report</h1>
+<div id="detailBox"></div>
+<button class="btn primary" onclick="printCurrent()">📄 PRINT / SAVE REPORT</button>
+<button class="btn dark" onclick="shareCurrent()">↗️ SHARE REPORT TEXT</button>
+<button class="btn ghost" onclick="show('records')">BACK TO RECORDS</button>
 </section>
 
 </main>
-
 <nav class="bottom">
-<button onclick="show('home')" id="navHome">⌂<br>Home</button>
-<button onclick="show('records')" id="navRecords">▣<br>Records</button>
-<button onclick="show('scan')" id="navScan">＋<br>Scan</button>
-<button onclick="show('calculator')">🧮<br>Check</button>
+<button id="navHome" onclick="show('home')">⌂<br>Home</button>
+<button id="navRecords" onclick="show('records')">▣<br>Records</button>
+<button id="navScan" onclick="show('scan')">＋<br>Scan</button>
 </nav>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
 <script>
-let stream=null, lastImageData="", records=JSON.parse(localStorage.getItem("infringeRecords")||"[]");
-
-function show(id){
- document.querySelectorAll(".screen").forEach(x=>x.classList.remove("active"));
- document.getElementById(id).classList.add("active");
- document.querySelectorAll(".bottom button").forEach(x=>x.classList.remove("active"));
- const nav={home:"navHome",records:"navRecords",scan:"navScan"}[id]; if(nav)document.getElementById(nav).classList.add("active");
- if(id==="records")renderRecords();
- if(id==="home")updateStats();
- window.scrollTo({top:0,behavior:"smooth"});
-}
-function checkCompliance(){
- const mode=document.getElementById("calcRules").value; let findings=[];
- if(mode==="assimilated"){
-  const daily=Number(document.getElementById("cDaily").value)||0, weekly=Number(document.getElementById("cWeekly").value)||0, fortnight=Number(document.getElementById("cFortnight").value)||0, bd=Number(document.getElementById("cBreakDrive").value)||0, rest=Number(document.getElementById("cRest").value)||0, reduced=Number(document.getElementById("cReduced").value)||0, wr=Number(document.getElementById("cWeeklyRest").value)||0;
-  if(daily>10) findings.push("Daily driving exceeds the absolute 10-hour maximum."); else if(daily>9) findings.push("Daily driving is over 9 hours. This can be permitted only where one of the week's two 10-hour extensions is available.");
-  if(weekly>56) findings.push("Weekly driving exceeds 56 hours.");
-  if(fortnight>90) findings.push("Two-week driving total exceeds 90 hours.");
-  if(bd>4.5) findings.push("More than 4.5 hours of driving has been entered without a qualifying break. Check the tachograph sequence.");
-  if(rest>0 && rest<9) findings.push("Daily rest entered is below the 9-hour minimum for a reduced daily rest.");
-  if(reduced>3) findings.push("More than 3 reduced daily rests have been entered since the last weekly rest period.");
-  if(wr>0 && wr<24) findings.push("Weekly rest entered is below 24 hours, so it does not meet the minimum reduced weekly rest period.");
-  if(!findings.length) findings.push("No potential breach was identified from the figures entered. Check the full tachograph sequence, split rests, weekly-rest timing and any applicable exceptions.");
- } else {
-  const daily=Number(document.getElementById("dDaily").value)||0, duty=Number(document.getElementById("dDuty").value)||0;
-  if(daily>10) findings.push("Daily driving exceeds 10 hours under GB domestic goods rules.");
-  if(duty>11) findings.push("Daily duty exceeds 11 hours under GB domestic goods rules.");
-  if(!findings.length) findings.push("No potential breach was identified from the figures entered. Check the applicable domestic exemptions and the complete duty record.");
- }
- const danger=findings.some(x=>/exceed|below|without|over 9|more than 3/i.test(x));
- document.getElementById("calcResult").innerHTML='<div class="'+(danger?'warn':'card')+'"><b>'+(danger?'Potential issue to review':'No potential breach from these figures')+'</b><ul>'+findings.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul><p class="small">This is a screening tool. Always verify the original tachograph record and current DVSA guidance.</p></div>';
-}
-document.getElementById("calcRules").addEventListener("change",function(){const a=this.value==="assimilated";document.getElementById("assimilatedFields").style.display=a?'block':'none';document.getElementById("domesticFields").style.display=a?'none':'block';document.getElementById("calcResult").innerHTML='';});
-
-function updateStats(){document.getElementById("countInfr").textContent=records.filter(r=>r.type==="Tachograph infringement").length;document.getElementById("countDocs").textContent=records.length}
-function handlePhoto(e){
- const file=e.target.files[0]; if(!file)return;
- const url=URL.createObjectURL(file); lastImageData=url;
- const img=document.getElementById("preview");img.src=url;img.style.display="block";
- document.getElementById("ocrBtn").style.display="block";document.getElementById("ocrStatus").textContent="Photo ready.";
-}
-async function startCamera(){
- try{
-  stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:"environment"}},audio:false});
-  const v=document.getElementById("video");v.srcObject=stream;v.style.display="block";await v.play();
-  document.getElementById("captureBtn").style.display="block";document.getElementById("cameraBtn").style.display="none";
- }catch(e){alert("Camera access was not available. Use the photo picker instead.");}
-}
-function capture(){
- const v=document.getElementById("video"),c=document.getElementById("canvas");
- c.width=v.videoWidth;c.height=v.videoHeight;c.getContext("2d").drawImage(v,0,0);
- lastImageData=c.toDataURL("image/jpeg",.9);
- const img=document.getElementById("preview");img.src=lastImageData;img.style.display="block";
- v.style.display="none";if(stream)stream.getTracks().forEach(t=>t.stop());
- document.getElementById("captureBtn").style.display="none";document.getElementById("cameraBtn").style.display="block";document.getElementById("ocrBtn").style.display="block";
-}
-async function runOCR(){
- if(!lastImageData)return;
- const status=document.getElementById("ocrStatus");status.textContent="Reading printout... this can take a little while.";
- try{
-  const {data}=await Tesseract.recognize(lastImageData,"eng",{logger:m=>{if(m.status==="recognizing text")status.textContent="Reading printout: "+Math.round((m.progress||0)*100)+"%";}});
-  document.getElementById("ocrText").value=data.text;
-  analyseText(data.text);
-  document.getElementById("ocrResult").style.display="block";status.textContent="Scan complete. Please review the result.";
- }catch(e){status.textContent="OCR failed. You can still add the record manually."}
-}
-function analyseText(text){
- const t=text.toLowerCase();
- let findings=[];
- if(/driv(e|ing).*?(9|10|11)\s*(h|hr|hours)/i.test(text)||/driving time/i.test(text))findings.push("Driving-time wording detected. Review the printout against the applicable daily/weekly driving limits.");
- if(/break|rest/i.test(t))findings.push("Break/rest wording detected. Review the recorded break and rest periods.");
- if(/infring|exceed|excess|violation|contravention/i.test(t))findings.push("Possible infringement/contravention wording detected.");
- const box=document.getElementById("possibleIssue");
- box.innerHTML=findings.length?'<div class="warn"><b>Possible issue to review</b><ul>'+findings.map(x=>"<li>"+x+"</li>").join("")+"</ul></div>":"<div class=\"badge\">No obvious infringement wording detected</div><p class=\"sub\">That does not mean the record is compliant. Review the original printout.</p>";
-}
-function prepareFromScan(){
- document.getElementById("issue").value=document.getElementById("possibleIssue").innerText.replace(/\s+/g," ").slice(0,500);
- document.getElementById("type").value="Tachograph infringement";
- show("record");
-}
-function saveRecord(){
- const r={id:Date.now(),type:document.getElementById("type").value,date:document.getElementById("date").value,time:document.getElementById("time").value,reg:document.getElementById("reg").value.toUpperCase(),location:document.getElementById("location").value,happened:document.getElementById("happened").value,issue:document.getElementById("issue").value,explanation:document.getElementById("explanation").value,created:new Date().toISOString()};
- records.unshift(r);localStorage.setItem("infringeRecords",JSON.stringify(records));updateStats();show("saved");
-}
-function renderRecords(){
- const el=document.getElementById("recordList");
- if(!records.length){el.innerHTML='<div class="card"><h3>No records yet</h3><p class="sub">Your saved compliance records will appear here.</p></div>';return}
- el.innerHTML=records.map(r=>'<div class="card"><span class="badge">'+esc(r.type)+'</span><h3>'+esc(r.issue||"Record")+'</h3><p class="sub">'+esc(r.date||"")+" "+esc(r.time||"")+" • "+esc(r.reg||"No vehicle")+'</p><p>'+esc(r.explanation||"No explanation added.")+'</p><button class="btn ghost" onclick="printRecord('+r.id+')">📄 PRINT REPORT</button></div>').join("");
-}
-function printRecord(id){
- const r=records.find(x=>x.id===id);if(!r)return;
- const w=window.open("","_blank");w.document.write('<html><head><title>Infringe Now HGV Report</title><style>body{font-family:Arial;padding:30px;max-width:800px;margin:auto}h1{color:#071018}hr{border:0;border-top:1px solid #ddd;margin:20px 0}.label{font-weight:bold;color:#555}</style></head><body><h1>INFRINGE NOW HGV</h1><h2>Compliance Record</h2><hr><p><span class="label">Type:</span> '+esc(r.type)+'</p><p><span class="label">Date:</span> '+esc(r.date)+' '+esc(r.time)+'</p><p><span class="label">Vehicle:</span> '+esc(r.reg)+'</p><p><span class="label">Location:</span> '+esc(r.location)+'</p><p><span class="label">What happened:</span> '+esc(r.happened)+'</p><p><span class="label">Recorded issue:</span> '+esc(r.issue)+'</p><p><span class="label">Driver explanation:</span><br>'+esc(r.explanation).replace(/\n/g,"<br>")+'</p><hr><p>Generated by Infringe Now HGV.</p><script>window.print()<\/script></body></html>');w.document.close();
-}
+const KEY="INFRINGE_NOW_HGV_RECORDS_V3";
+let records=JSON.parse(localStorage.getItem(KEY)||"[]"), currentId=null, lastImage="", evidenceName="";
+function saveAll(){localStorage.setItem(KEY,JSON.stringify(records));updateStats()}
+function updateStats(){nIssues.textContent=records.filter(r=>r.status!=="No infringement / explanation").length;nRecords.textContent=records.length}
+function show(id){document.querySelectorAll(".screen").forEach(x=>x.classList.remove("active"));document.getElementById(id).classList.add("active");document.querySelectorAll(".bottom button").forEach(x=>x.classList.remove("active"));({home:"navHome",records:"navRecords",scan:"navScan"}[id]&&document.getElementById(({home:"navHome",records:"navRecords",scan:"navScan"}[id])).classList.add("active"));if(id==="records")renderRecords();window.scrollTo(0,0)}
+function newRecord(){clearForm();show("record")}
+function clearForm(){["date","time","reg","location","issue","explanation","action"].forEach(id=>document.getElementById(id).value="");document.getElementById("status").value="Potential issue";evidenceName="";document.getElementById("evidenceName").textContent="";document.getElementById("date").value=new Date().toISOString().slice(0,10);document.getElementById("time").value=new Date().toTimeString().slice(0,5)}
+function photoChosen(e){const f=e.target.files[0];if(!f)return;lastImage=URL.createObjectURL(f);preview.src=lastImage;preview.style.display="block";readBtn.style.display="block";scanStatus.textContent="Photo ready: "+f.name}
+async function readPrintout(){if(!lastImage)return;scanStatus.textContent="Reading printout...";try{const out=await Tesseract.recognize(lastImage,"eng",{logger:m=>{if(m.status==="recognizing text")scanStatus.textContent="Reading: "+Math.round((m.progress||0)*100)+"%"}});ocrText.value=out.data.text;analyse(out.data.text);scanResult.style.display="block";scanStatus.textContent="Scan complete. Review the result.";lastImage=lastImage}catch(e){scanStatus.textContent="Could not read the printout. You can still enter it manually."}}
+function analyse(t){let s=t.toLowerCase(), f=[];if(/infring|contravention|exceed|excess|violation/.test(s))f.push("The printout text contains wording associated with a possible infringement or contravention.");if(/break|rest/.test(s))f.push("Break/rest wording was detected. Review the recorded periods.");if(/driv/.test(s))f.push("Driving-related wording was detected. Review the driving periods and applicable limits.");finding.innerHTML=f.length?"<b>Potential issue to review</b><ul>"+f.map(x=>"<li>"+esc(x)+"</li>").join("")+"</ul>":"<b>No obvious infringement wording detected.</b><p>That is not proof of compliance. Review the original printout.</p>"}
+function continueFromScan(){clearForm();issue.value=finding.innerText.replace(/\s+/g," ");show("record")}
+function selectNoIssue(el){document.querySelectorAll(".choice").forEach(x=>x.classList.remove("selected"));el.classList.add("selected");status.value="No infringement / explanation"}
+function evidenceChosen(e){const f=e.target.files[0];evidenceName=f?f.name:"";document.getElementById("evidenceName").textContent=f?"Attached: "+f.name:""}
+function saveRecord(){const r={id:Date.now(),status:status.value,type:type.value,date:date.value,time:time.value,reg:reg.value.toUpperCase(),location:location.value,issue:issue.value,happened:happened.value,explanation:explanation.value,action:action.value,evidence:evidenceName,created:new Date().toISOString()};records.unshift(r);saveAll();openDetail(r.id)}
+function renderRecords(){if(!records.length){recordList.innerHTML='<div class="card"><h3>No records yet</h3><p class="sub">Scan a printout or add a record manually.</p></div>';return}recordList.innerHTML=records.map(r=>'<div class="record"><span class="badge">'+esc(r.status)+'</span><h3>'+esc(r.issue||r.type)+'</h3><p class="small">'+esc(r.date||"")+" "+esc(r.time||"")+" • "+esc(r.reg||"No vehicle")+'</p><p>'+esc(r.explanation||"No driver explanation added.")+'</p><button class="btn ghost" onclick="openDetail('+r.id+')">VIEW REPORT</button><button class="btn ghost" onclick="deleteRecord('+r.id+')">DELETE</button></div>').join("")}
+function openDetail(id){currentId=id;const r=records.find(x=>x.id===id);if(!r)return;detailBox.innerHTML='<div class="card"><span class="badge">'+esc(r.status)+'</span><h2>'+esc(r.type)+'</h2><p><b>Date/time:</b> '+esc(r.date)+' '+esc(r.time)+'</p><p><b>Vehicle:</b> '+esc(r.reg)+'</p><p><b>Location:</b> '+esc(r.location)+'</p><p><b>Possible issue:</b> '+esc(r.issue)+'</p><p><b>Event:</b> '+esc(r.happened)+'</p><h3>Driver’s explanation</h3><div class="reportbox">'+esc(r.explanation||"Not provided")+'</div><h3>Action taken</h3><div class="reportbox">'+esc(r.action||"Not provided")+'</div><p><b>Evidence:</b> '+esc(r.evidence||"No file name recorded")+'</p><p class="small">Created: '+new Date(r.created).toLocaleString()+'</p></div>';show("detail")}
+function deleteRecord(id){if(!confirm("Delete this compliance record?"))return;records=records.filter(r=>r.id!==id);saveAll();renderRecords()}
+function reportText(r){return `INFRINGE NOW HGV\\nCOMPLIANCE RECORD\\n\\nStatus: ${r.status}\\nType: ${r.type}\\nDate/time: ${r.date} ${r.time}\\nVehicle: ${r.reg}\\nLocation: ${r.location}\\nPossible issue: ${r.issue}\\nEvent: ${r.happened}\\n\\nDRIVER'S EXPLANATION\\n${r.explanation||"Not provided"}\\n\\nACTION TAKEN\\n${r.action||"Not provided"}\\n\\nEvidence: ${r.evidence||"None recorded"}\\nCreated: ${new Date(r.created).toLocaleString()}\\n\\nThis record is a driver log and review aid. It is not a legal determination.`}
+function printCurrent(){const r=records.find(x=>x.id===currentId);if(!r)return;const w=window.open("","_blank");w.document.write("<html><head><title>Infringe Now HGV Report</title><style>body{font-family:Arial;max-width:760px;margin:30px auto;padding:10px}h1{color:#071018}.box{background:#f4f6f8;padding:12px;border-radius:8px;white-space:pre-wrap}</style></head><body><h1>INFRINGE NOW HGV</h1><h2>Compliance Record</h2><div class='box'>"+esc(reportText(r))+"</div><script>window.print()<\\/script></body></html>");w.document.close()}
+async function shareCurrent(){const r=records.find(x=>x.id===currentId);if(!r)return;const text=reportText(r);if(navigator.share)await navigator.share({title:"Infringe Now HGV report",text});else{await navigator.clipboard.writeText(text);alert("Report copied to clipboard.")}}
 function esc(s){return String(s||"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
 updateStats();
 </script>
