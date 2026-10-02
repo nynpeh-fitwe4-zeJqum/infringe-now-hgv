@@ -38,6 +38,7 @@ textarea{min-height:100px;resize:vertical}.preview{width:100%;border-radius:14px
 <div class="statrow"><div class="stat"><b id="countInfr">0</b>Infringements</div><div class="stat"><b id="countDocs">0</b>Documents</div></div>
 <button class="btn primary" onclick="show('scan')">📷 SCAN INFRINGEMENT</button>
 <button class="btn dark" onclick="show('record')">＋ ADD RECORD MANUALLY</button>
+<button class="btn ghost" onclick="show('calculator')">🧮 CHECK TACHO HOURS</button>
 <div class="card"><span class="badge">BETA</span><h3>Driver-first compliance record</h3><p class="sub">Photograph a printout, read the text, review the possible issue and save the evidence with your explanation.</p></div>
 </section>
 
@@ -90,12 +91,37 @@ textarea{min-height:100px;resize:vertical}.preview{width:100%;border-radius:14px
 <div class="card" style="text-align:center"><div style="font-size:42px">✓</div><h1>Record Saved</h1><p class="sub">Your record and supporting evidence have been saved on this device.</p>
 <button class="btn primary" onclick="show('records')">VIEW RECORDS</button><button class="btn ghost" onclick="show('home')">BACK HOME</button></div>
 </section>
+
+<section id="calculator" class="screen">
+<h1>Infringement Checker</h1><p class="sub">Enter the figures from the tachograph. The checker flags potential issues for review. It does not make a legal determination.</p>
+<div class="card">
+<label>Ruleset</label><select id="calcRules"><option value="assimilated">Assimilated / AETR goods vehicle rules</option><option value="domestic">GB domestic goods rules</option></select>
+<div id="assimilatedFields">
+<label>Driving today (hours)</label><input id="cDaily" type="number" min="0" max="24" step="0.01" placeholder="e.g. 9.25">
+<label>Driving this fixed week (hours)</label><input id="cWeekly" type="number" min="0" max="100" step="0.01" placeholder="e.g. 55">
+<label>Driving in previous + current fixed week (hours)</label><input id="cFortnight" type="number" min="0" max="120" step="0.01" placeholder="e.g. 88">
+<label>Driving before a qualifying break (hours)</label><input id="cBreakDrive" type="number" min="0" max="12" step="0.01" placeholder="e.g. 4.75">
+<label>Daily rest taken (hours)</label><input id="cRest" type="number" min="0" max="24" step="0.01" placeholder="e.g. 10.5">
+<label>Reduced daily rests used since the last weekly rest</label><input id="cReduced" type="number" min="0" max="10" step="1" placeholder="0 to 3">
+<label>Weekly rest taken (hours)</label><input id="cWeeklyRest" type="number" min="0" max="100" step="0.01" placeholder="e.g. 45">
+</div>
+<div id="domesticFields" style="display:none">
+<label>Driving today (hours)</label><input id="dDaily" type="number" min="0" max="24" step="0.01" placeholder="e.g. 10.5">
+<label>Duty today (hours)</label><input id="dDuty" type="number" min="0" max="24" step="0.01" placeholder="e.g. 11.5">
+</div>
+<button class="btn primary" onclick="checkCompliance()">CHECK FOR POTENTIAL INFRINGEMENTS</button>
+<div id="calcResult" class="result"></div>
+</div>
+<div class="card"><span class="badge">CURRENT RULE BASIS</span><p class="sub">For assimilated goods-vehicle rules, the standard limits include 9 hours daily driving, extendable to 10 hours twice in a fixed week, 56 hours weekly, 90 hours over two fixed weeks, 45 minutes after no more than 4.5 hours driving, and 11 hours regular daily rest with limited reductions to 9 hours.</p></div>
+</section>
+
 </main>
 
 <nav class="bottom">
 <button onclick="show('home')" id="navHome">⌂<br>Home</button>
 <button onclick="show('records')" id="navRecords">▣<br>Records</button>
 <button onclick="show('scan')" id="navScan">＋<br>Scan</button>
+<button onclick="show('calculator')">🧮<br>Check</button>
 </nav>
 </div>
 
@@ -112,6 +138,29 @@ function show(id){
  if(id==="home")updateStats();
  window.scrollTo({top:0,behavior:"smooth"});
 }
+function checkCompliance(){
+ const mode=document.getElementById("calcRules").value; let findings=[];
+ if(mode==="assimilated"){
+  const daily=Number(document.getElementById("cDaily").value)||0, weekly=Number(document.getElementById("cWeekly").value)||0, fortnight=Number(document.getElementById("cFortnight").value)||0, bd=Number(document.getElementById("cBreakDrive").value)||0, rest=Number(document.getElementById("cRest").value)||0, reduced=Number(document.getElementById("cReduced").value)||0, wr=Number(document.getElementById("cWeeklyRest").value)||0;
+  if(daily>10) findings.push("Daily driving exceeds the absolute 10-hour maximum."); else if(daily>9) findings.push("Daily driving is over 9 hours. This can be permitted only where one of the week's two 10-hour extensions is available.");
+  if(weekly>56) findings.push("Weekly driving exceeds 56 hours.");
+  if(fortnight>90) findings.push("Two-week driving total exceeds 90 hours.");
+  if(bd>4.5) findings.push("More than 4.5 hours of driving has been entered without a qualifying break. Check the tachograph sequence.");
+  if(rest>0 && rest<9) findings.push("Daily rest entered is below the 9-hour minimum for a reduced daily rest.");
+  if(reduced>3) findings.push("More than 3 reduced daily rests have been entered since the last weekly rest period.");
+  if(wr>0 && wr<24) findings.push("Weekly rest entered is below 24 hours, so it does not meet the minimum reduced weekly rest period.");
+  if(!findings.length) findings.push("No potential breach was identified from the figures entered. Check the full tachograph sequence, split rests, weekly-rest timing and any applicable exceptions.");
+ } else {
+  const daily=Number(document.getElementById("dDaily").value)||0, duty=Number(document.getElementById("dDuty").value)||0;
+  if(daily>10) findings.push("Daily driving exceeds 10 hours under GB domestic goods rules.");
+  if(duty>11) findings.push("Daily duty exceeds 11 hours under GB domestic goods rules.");
+  if(!findings.length) findings.push("No potential breach was identified from the figures entered. Check the applicable domestic exemptions and the complete duty record.");
+ }
+ const danger=findings.some(x=>/exceed|below|without|over 9|more than 3/i.test(x));
+ document.getElementById("calcResult").innerHTML='<div class="'+(danger?'warn':'card')+'"><b>'+(danger?'Potential issue to review':'No potential breach from these figures')+'</b><ul>'+findings.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul><p class="small">This is a screening tool. Always verify the original tachograph record and current DVSA guidance.</p></div>';
+}
+document.getElementById("calcRules").addEventListener("change",function(){const a=this.value==="assimilated";document.getElementById("assimilatedFields").style.display=a?'block':'none';document.getElementById("domesticFields").style.display=a?'none':'block';document.getElementById("calcResult").innerHTML='';});
+
 function updateStats(){document.getElementById("countInfr").textContent=records.filter(r=>r.type==="Tachograph infringement").length;document.getElementById("countDocs").textContent=records.length}
 function handlePhoto(e){
  const file=e.target.files[0]; if(!file)return;
