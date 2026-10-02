@@ -35,6 +35,7 @@
 <div id="scanResult" class="card" style="display:none">
 <span class="badge">REVIEW REQUIRED</span>
 <div id="finding" class="warn"></div>
+<div id="analysis" class="card" style="margin-top:12px;background:#f7f9fb"></div>
 <label>Detected text</label><textarea id="ocrText"></textarea>
 <p class="small">OCR can misread printouts. Check the original printout before treating any result as accurate.</p>
 <button class="btn primary" onclick="continueFromScan()">CONTINUE TO DRIVER EXPLANATION</button>
@@ -53,6 +54,7 @@
 <label>Time</label><input id="time" type="time">
 <label>Vehicle registration</label><input id="reg" placeholder="AB12 XYZ">
 <label>Location</label><input id="location" placeholder="M5 southbound / depot / town">
+<label>Automatic analysis summary</label><textarea id="analysisSummary" placeholder="Detected findings from the scan"></textarea>
 <label>Possible issue / event</label><input id="issue" placeholder="What the printout appears to show">
 <label>What happened?</label><select id="happened"><option>Driving time issue</option><option>Break / rest issue</option><option>Daily rest issue</option><option>Weekly rest issue</option><option>Manual entry issue</option><option>Tachograph fault / event</option><option>Other</option></select>
 <label>Driver's explanation</label>
@@ -96,16 +98,36 @@ function saveAll(){localStorage.setItem(KEY,JSON.stringify(records));updateStats
 function updateStats(){nIssues.textContent=records.filter(r=>r.status!=="No infringement / explanation").length;nRecords.textContent=records.length}
 function show(id){document.querySelectorAll(".screen").forEach(x=>x.classList.remove("active"));document.getElementById(id).classList.add("active");document.querySelectorAll(".bottom button").forEach(x=>x.classList.remove("active"));({home:"navHome",records:"navRecords",scan:"navScan"}[id]&&document.getElementById(({home:"navHome",records:"navRecords",scan:"navScan"}[id])).classList.add("active"));if(id==="records")renderRecords();window.scrollTo(0,0)}
 function newRecord(){clearForm();show("record")}
-function clearForm(){["date","time","reg","location","issue","explanation","action"].forEach(id=>document.getElementById(id).value="");document.getElementById("status").value="Potential issue";evidenceName="";document.getElementById("evidenceName").textContent="";document.getElementById("date").value=new Date().toISOString().slice(0,10);document.getElementById("time").value=new Date().toTimeString().slice(0,5)}
+function clearForm(){["date","time","reg","location","issue","analysisSummary","explanation","action"].forEach(id=>document.getElementById(id).value="");document.getElementById("status").value="Potential issue";evidenceName="";document.getElementById("evidenceName").textContent="";document.getElementById("date").value=new Date().toISOString().slice(0,10);document.getElementById("time").value=new Date().toTimeString().slice(0,5)}
 function photoChosen(e){const f=e.target.files[0];if(!f)return;lastImage=URL.createObjectURL(f);preview.src=lastImage;preview.style.display="block";readBtn.style.display="block";scanStatus.textContent="Photo ready: "+f.name}
 async function readPrintout(){if(!lastImage)return;scanStatus.textContent="Reading printout...";try{const out=await Tesseract.recognize(lastImage,"eng",{logger:m=>{if(m.status==="recognizing text")scanStatus.textContent="Reading: "+Math.round((m.progress||0)*100)+"%"}});ocrText.value=out.data.text;analyse(out.data.text);scanResult.style.display="block";scanStatus.textContent="Scan complete. Review the result.";lastImage=lastImage}catch(e){scanStatus.textContent="Could not read the printout. You can still enter it manually."}}
-function analyse(t){let s=t.toLowerCase(), f=[];if(/infring|contravention|exceed|excess|violation/.test(s))f.push("The printout text contains wording associated with a possible infringement or contravention.");if(/break|rest/.test(s))f.push("Break/rest wording was detected. Review the recorded periods.");if(/driv/.test(s))f.push("Driving-related wording was detected. Review the driving periods and applicable limits.");finding.innerHTML=f.length?"<b>Potential issue to review</b><ul>"+f.map(x=>"<li>"+esc(x)+"</li>").join("")+"</ul>":"<b>No obvious infringement wording detected.</b><p>That is not proof of compliance. Review the original printout.</p>"}
-function continueFromScan(){clearForm();issue.value=finding.innerText.replace(/\s+/g," ");show("record")}
+function hm(x){let m=String(x||"").match(/(\d{1,2})\s*h(?:ours?)?\s*(\d{1,2})?/i);if(m)return (+m[1]*60)+(+m[2]||0);let q=String(x||"").match(/(\d{1,2}):(\d{2})/);return q?(+q[1]*60)+(+q[2]):null}
+function fmt(m){return Math.floor(m/60)+"h "+String(m%60).padStart(2,"0")}
+function analyse(t){
+ let s=t.toLowerCase(), f=[], checks=[];
+ const driveMatches=[...s.matchAll(/total\s+drive\s+time\s*:\s*(\d{1,2})\s*h\s*(\d{1,2})/gi)];
+ const limitMatches=[...s.matchAll(/(?:limit|daily driving.*limit)\s*(\d{1,2})\s*h\s*(\d{1,2})/gi)];
+ if(driveMatches.length){
+   const total=+driveMatches[0][1]*60+(+driveMatches[0][2]||0);
+   const limit=limitMatches.length?(+limitMatches[0][1]*60+(+limitMatches[0][2]||0)):9*60;
+   if(total>limit){
+     f.push("The printout appears to show daily driving above the stated limit.");
+     checks.push(["Daily driving",fmt(total)+" recorded",fmt(limit)+" stated limit","Potential infringement"]);
+   } else checks.push(["Daily driving",fmt(total)+" recorded",fmt(limit)+" reference limit","No exceedance detected"]);
+ }
+ if(/break|rest/.test(s)) checks.push(["Break / rest","Rest or break activity detected","Requires period-by-period review","Review required"]);
+ if(/weekly|fortnight|two week/.test(s)) checks.push(["Weekly / fortnightly","Weekly-limit wording detected","Requires period-by-period review","Review required"]);
+ if(/event|fault|infring|contravention|exceed|violation/.test(s)) f.push("The printout contains event, fault or infringement-related wording.");
+ if(!checks.length) checks.push(["General review","No structured totals confidently extracted","Original printout required","Review required"]);
+ finding.innerHTML=f.length?"<b>Potential issue to review</b><ul>"+f.map(x=>"<li>"+esc(x)+"</li>").join("")+"</ul>":"<b>No clear infringement was automatically identified.</b><p>The app still requires a human review of the original printout.</p>";
+ analysis.innerHTML="<h3>Automatic compliance analysis</h3>"+checks.map(c=>"<div style='padding:9px 0;border-top:1px solid #d7dfe8'><b>"+esc(c[0])+"</b><br><span>"+esc(c[1])+" • "+esc(c[2])+"</span><br><span class='badge'>"+esc(c[3])+"</span></div>").join("")+"<p class='small'>These are screening results, not a legal determination. Check the complete tachograph record, applicable rules and any permitted exemptions before taking action.</p>";
+}
+function continueFromScan(){clearForm();issue.value=finding.innerText.replace(/\s+/g," ");analysisSummary.value=analysis.innerText;show("record")}
 function selectNoIssue(el){document.querySelectorAll(".choice").forEach(x=>x.classList.remove("selected"));el.classList.add("selected");status.value="No infringement / explanation"}
 function evidenceChosen(e){const f=e.target.files[0];evidenceName=f?f.name:"";document.getElementById("evidenceName").textContent=f?"Attached: "+f.name:""}
-function saveRecord(){const r={id:Date.now(),status:status.value,type:type.value,date:date.value,time:time.value,reg:reg.value.toUpperCase(),location:location.value,issue:issue.value,happened:happened.value,explanation:explanation.value,action:action.value,evidence:evidenceName,created:new Date().toISOString()};records.unshift(r);saveAll();openDetail(r.id)}
+function saveRecord(){const r={id:Date.now(),status:status.value,type:type.value,date:date.value,time:time.value,reg:reg.value.toUpperCase(),location:location.value,issue:issue.value,analysisSummary:analysisSummary.value,happened:happened.value,explanation:explanation.value,action:action.value,evidence:evidenceName,created:new Date().toISOString()};records.unshift(r);saveAll();openDetail(r.id)}
 function renderRecords(){if(!records.length){recordList.innerHTML='<div class="card"><h3>No records yet</h3><p class="sub">Scan a printout or add a record manually.</p></div>';return}recordList.innerHTML=records.map(r=>'<div class="record"><span class="badge">'+esc(r.status)+'</span><h3>'+esc(r.issue||r.type)+'</h3><p class="small">'+esc(r.date||"")+" "+esc(r.time||"")+" • "+esc(r.reg||"No vehicle")+'</p><p>'+esc(r.explanation||"No driver explanation added.")+'</p><button class="btn ghost" onclick="openDetail('+r.id+')">VIEW REPORT</button><button class="btn ghost" onclick="deleteRecord('+r.id+')">DELETE</button></div>').join("")}
-function openDetail(id){currentId=id;const r=records.find(x=>x.id===id);if(!r)return;detailBox.innerHTML='<div class="card"><span class="badge">'+esc(r.status)+'</span><h2>'+esc(r.type)+'</h2><p><b>Date/time:</b> '+esc(r.date)+' '+esc(r.time)+'</p><p><b>Vehicle:</b> '+esc(r.reg)+'</p><p><b>Location:</b> '+esc(r.location)+'</p><p><b>Possible issue:</b> '+esc(r.issue)+'</p><p><b>Event:</b> '+esc(r.happened)+'</p><h3>Driver’s explanation</h3><div class="reportbox">'+esc(r.explanation||"Not provided")+'</div><h3>Action taken</h3><div class="reportbox">'+esc(r.action||"Not provided")+'</div><p><b>Evidence:</b> '+esc(r.evidence||"No file name recorded")+'</p><p class="small">Created: '+new Date(r.created).toLocaleString()+'</p></div>';show("detail")}
+function openDetail(id){currentId=id;const r=records.find(x=>x.id===id);if(!r)return;detailBox.innerHTML='<div class="card"><span class="badge">'+esc(r.status)+'</span><h2>'+esc(r.type)+'</h2><p><b>Date/time:</b> '+esc(r.date)+' '+esc(r.time)+'</p><p><b>Vehicle:</b> '+esc(r.reg)+'</p><p><b>Location:</b> '+esc(r.location)+'</p><p><b>Possible issue:</b> '+esc(r.issue)+'</p><h3>Automatic analysis</h3><div class="reportbox">'+esc(r.analysisSummary||"Not recorded")+'</div><p><b>Event:</b> '+esc(r.happened)+'</p><h3>Driver’s explanation</h3><div class="reportbox">'+esc(r.explanation||"Not provided")+'</div><h3>Action taken</h3><div class="reportbox">'+esc(r.action||"Not provided")+'</div><p><b>Evidence:</b> '+esc(r.evidence||"No file name recorded")+'</p><p class="small">Created: '+new Date(r.created).toLocaleString()+'</p></div>';show("detail")}
 function deleteRecord(id){if(!confirm("Delete this compliance record?"))return;records=records.filter(r=>r.id!==id);saveAll();renderRecords()}
 function reportText(r){return `INFRINGE NOW HGV\\nCOMPLIANCE RECORD\\n\\nStatus: ${r.status}\\nType: ${r.type}\\nDate/time: ${r.date} ${r.time}\\nVehicle: ${r.reg}\\nLocation: ${r.location}\\nPossible issue: ${r.issue}\\nEvent: ${r.happened}\\n\\nDRIVER'S EXPLANATION\\n${r.explanation||"Not provided"}\\n\\nACTION TAKEN\\n${r.action||"Not provided"}\\n\\nEvidence: ${r.evidence||"None recorded"}\\nCreated: ${new Date(r.created).toLocaleString()}\\n\\nThis record is a driver log and review aid. It is not a legal determination.`}
 function printCurrent(){const r=records.find(x=>x.id===currentId);if(!r)return;const w=window.open("","_blank");w.document.write("<html><head><title>Infringe Now HGV Report</title><style>body{font-family:Arial;max-width:760px;margin:30px auto;padding:10px}h1{color:#071018}.box{background:#f4f6f8;padding:12px;border-radius:8px;white-space:pre-wrap}</style></head><body><h1>INFRINGE NOW HGV</h1><h2>Compliance Record</h2><div class='box'>"+esc(reportText(r))+"</div><script>window.print()<\\/script></body></html>");w.document.close()}
