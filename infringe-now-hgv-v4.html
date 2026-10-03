@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#071018">
+<title>Infringe Now HGV V4</title>
+<style>
+:root{--navy:#071018;--ink:#17202b;--green:#12c866;--green2:#0e9f50;--blue:#2563c9;--red:#c62828;--amber:#a66500;--line:#d7dfe8;--muted:#66727f;--bg:#f3f6f8}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
+.app{max-width:560px;margin:auto;min-height:100vh;background:#fff;box-shadow:0 0 30px #0001;padding-bottom:92px}
+header{background:var(--navy);color:#fff;padding:24px 20px 20px;position:sticky;top:0;z-index:5}
+.brand{font-size:25px;font-weight:900;letter-spacing:.3px}.version{display:inline-block;background:#1e3343;border:1px solid #355165;border-radius:999px;padding:4px 9px;font-size:11px;margin-left:7px;vertical-align:middle}.tag{margin-top:5px;color:#b8c4cf;font-weight:650}
+main{padding:18px 16px}.hero h1{font-size:34px;line-height:1.05;margin:4px 0 10px}.hero p{font-size:18px;line-height:1.35;color:var(--muted);margin:0 0 18px}
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:12px}.stat{background:#f3f6f8;border-radius:20px;padding:18px}.stat b{font-size:34px;display:block}.stat span{font-weight:700;color:#657180}
+section.card{border:1px solid var(--line);border-radius:22px;padding:18px;margin:16px 0;box-shadow:0 2px 10px #17202b0a}
+h2{margin:0 0 12px;font-size:23px}h3{margin:18px 0 8px}.muted{color:var(--muted)}.notice{background:#eef8f1;border-left:5px solid var(--green);padding:12px;border-radius:12px;font-size:14px;line-height:1.4}
+label{display:block;font-weight:800;margin:12px 0 6px}input,select,textarea{width:100%;padding:13px;border:1px solid #cbd5df;border-radius:12px;font-size:16px;background:#fff}textarea{min-height:100px;resize:vertical}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+button{border:0;border-radius:13px;padding:14px 16px;font-weight:900;font-size:16px;cursor:pointer}.primary{background:var(--green);color:#fff}.dark{background:var(--navy);color:#fff}.secondary{background:#eaf1ff;color:#2456a8}.danger{background:#feecec;color:#a51e1e}.small{font-size:13px;padding:10px 12px}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:14px}
+.result{padding:14px;border-radius:14px;margin:10px 0;border:1px solid var(--line)}.result.ok{background:#edf9f1;border-color:#b8e7c9}.result.warn{background:#fff7e8;border-color:#f0d39a}.result.bad{background:#fff0f0;border-color:#efb7b7}.result strong{display:block;margin-bottom:4px}
+.badge{display:inline-block;padding:5px 9px;border-radius:999px;background:#edf1f4;font-size:12px;font-weight:900;margin:3px}
+.item{padding:14px 0;border-bottom:1px solid #e4e9ee}.item:last-child{border-bottom:0}.item-title{font-weight:900}.item small{color:var(--muted)}
+nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(560px,100%);background:#071018;color:#fff;display:grid;grid-template-columns:repeat(4,1fr);padding:9px 8px calc(9px + env(safe-area-inset-bottom));z-index:10}nav button{background:none;color:#b9c3cc;padding:8px 4px;font-size:12px}nav button.active{color:#52d783}nav span{display:block;font-size:22px;margin-bottom:2px}
+.page{display:none}.page.active{display:block}
+.rule{padding:12px 0;border-bottom:1px solid #e5e9ee}.rule:last-child{border:0}.rule b{display:block}.rule small{color:var(--muted);line-height:1.4}
+.record{border:1px solid var(--line);border-radius:16px;padding:14px;margin:10px 0}.record h3{margin:0 0 6px}.record .meta{font-size:13px;color:var(--muted)}
+footer{padding:5px 16px 20px;color:#7a8590;font-size:11px;text-align:center}
+@media(max-width:380px){.grid2{grid-template-columns:1fr}.hero h1{font-size:30px}}
+</style>
+</head>
+<body>
+<div class="app">
+<header>
+  <div class="brand">INFRINGE NOW HGV <span class="version">V4</span></div>
+  <div class="tag">Driver compliance & tachograph checker</div>
+</header>
+
+<main>
+<div id="home" class="page active">
+  <div class="hero"><h1>Driver compliance</h1><p>Check tachograph figures, record potential infringements and keep evidence together.</p></div>
+  <div class="cards">
+    <div class="stat"><b id="issueCount">0</b><span>Potential infringements</span></div>
+    <div class="stat"><b id="recordCount">0</b><span>Saved records</span></div>
+  </div>
+  <section class="card">
+    <h2>Quick check</h2>
+    <p class="muted">Enter figures from a tachograph record. The checker highlights figures that exceed the selected assimilated-rule limits. Results are prompts for review, not legal findings.</p>
+    <button class="primary" onclick="go('check')">Start compliance check</button>
+    <div class="actions"><button class="secondary" onclick="go('rules')">Browse infringement library</button></div>
+  </section>
+  <section class="card">
+    <h2>What V4 adds</h2>
+    <div class="badge">Daily driving</div><div class="badge">Weekly driving</div><div class="badge">90-hour limit</div>
+    <div class="badge">Breaks</div><div class="badge">Daily rest</div><div class="badge">Weekly rest</div>
+    <div class="badge">Records</div><div class="badge">Evidence</div><div class="badge">Export</div>
+  </section>
+</div>
+
+<div id="check" class="page">
+  <h1>Compliance check</h1>
+  <section class="card">
+    <div class="notice">Designed around the UK assimilated drivers' hours rules for goods vehicles. If your journey is under a different regime or an exemption applies, use the result as a prompt to check the correct rules.</div>
+    <label>Date</label><input id="cDate" type="date">
+    <label>Daily driving</label>
+    <div class="grid2"><input id="daily" type="number" min="0" step=".25" placeholder="Hours, e.g. 9.5"><select id="dailyExt"><option value="no">No 10-hour extension</option><option value="yes">10-hour extension used</option></select></div>
+    <label>Weekly driving</label><input id="weekly" type="number" min="0" step=".25" placeholder="Hours in fixed week">
+    <label>Two-week driving total</label><input id="fortnight" type="number" min="0" step=".25" placeholder="Hours across 2 consecutive weeks">
+    <label>Driving since last qualifying 45-minute break</label><input id="sinceBreak" type="number" min="0" step=".25" placeholder="Hours">
+    <label>Break taken in the current 4.5-hour driving period</label>
+    <select id="breakTaken"><option value="none">No qualifying break yet</option><option value="15">15 minutes only</option><option value="45">45 minutes</option><option value="split">15 + 30 minutes</option></select>
+    <label>Daily rest obtained</label><input id="dailyRest" type="number" min="0" step=".25" placeholder="Hours">
+    <label>Reduced daily rests used since last weekly rest</label><input id="reducedRests" type="number" min="0" step="1" placeholder="0 to 3">
+    <label>Weekly rest obtained</label><input id="weeklyRest" type="number" min="0" step=".25" placeholder="Hours">
+    <div class="actions"><button class="primary" onclick="runCheck()">Run check</button><button class="dark" onclick="clearCheck()">Clear</button></div>
+  </section>
+  <section id="checkResults" class="card" style="display:none"><h2>Result</h2><div id="resultList"></div><div class="actions"><button class="primary" onclick="saveCurrent()">Save this check</button></div></section>
+</div>
+
+<div id="rules" class="page">
+  <h1>Infringement library</h1>
+  <section class="card">
+    <div class="rule"><b>Daily driving</b><small>Normally maximum 9 hours. It can be extended to 10 hours no more than twice in a fixed week.</small></div>
+    <div class="rule"><b>Weekly driving</b><small>Maximum 56 hours in a fixed week.</small></div>
+    <div class="rule"><b>Two-week driving</b><small>Maximum 90 hours over any 2 consecutive weeks.</small></div>
+    <div class="rule"><b>Break</b><small>After no more than 4.5 hours of driving, take at least 45 minutes. A qualifying split is 15 minutes followed by 30 minutes.</small></div>
+    <div class="rule"><b>Daily rest</b><small>Regular daily rest is at least 11 continuous hours. It can be reduced to at least 9 hours up to 3 times between weekly rests.</small></div>
+    <div class="rule"><b>Weekly rest</b><small>A regular weekly rest is at least 45 hours. A reduced weekly rest is at least 24 hours and less than 45 hours, subject to the compensation rules.</small></div>
+    <div class="rule"><b>Weekly-rest timing</b><small>A weekly rest must normally start no later than the end of six consecutive 24-hour periods from the end of the previous weekly rest.</small></div>
+  </section>
+  <section class="card"><h2>Important</h2><p class="muted">The app does not decide whether an offence has legally occurred. The complete tachograph record, manual entries, applicable exemptions, route, vehicle and other facts may change the assessment.</p></section>
+</div>
+
+<div id="records" class="page">
+  <h1>Saved records</h1>
+  <section class="card">
+    <div class="actions"><button class="primary" onclick="go('check')">+ New check</button><button class="secondary" onclick="exportRecords()">Export records</button><button class="danger" onclick="clearRecords()">Delete all</button></div>
+    <div id="recordsList"></div>
+  </section>
+</div>
+
+<div id="evidence" class="page">
+  <h1>Evidence & notes</h1>
+  <section class="card">
+    <p class="muted">V4 keeps a simple local evidence note with each saved check. Your records stay in this browser unless you export them.</p>
+    <label>Driver / vehicle note</label><textarea id="evidenceNote" placeholder="Example: Printout checked at depot. Driver explained the break shown..."></textarea>
+    <label>Evidence filename / reference</label><input id="evidenceName" placeholder="Example: printout-2026-10-03.jpg">
+    <div class="actions"><button class="primary" onclick="saveEvidence()">Save evidence note</button></div>
+    <div id="evidenceSaved" class="result ok" style="display:none"></div>
+  </section>
+</div>
+</main>
+
+<footer>Infringe Now HGV V4 • Always review the original tachograph record and applicable rules.</footer>
+
+<nav>
+ <button id="nav-home" class="active" onclick="go('home')"><span>⌂</span>Home</button>
+ <button id="nav-check" onclick="go('check')"><span>✓</span>Check</button>
+ <button id="nav-rules" onclick="go('rules')"><span>📚</span>Rules</button>
+ <button id="nav-records" onclick="go('records')"><span>▣</span>Records</button>
+</nav>
+</div>
+
+<script>
+const KEY="INFRINGE_NOW_HGV_V4_RECORDS";
+let records=JSON.parse(localStorage.getItem(KEY)||"[]");
+let lastResults=[];
+
+function $(id){return document.getElementById(id)}
+function saveAll(){localStorage.setItem(KEY,JSON.stringify(records));updateStats()}
+function updateStats(){
+  $("recordCount").textContent=records.length;
+  $("issueCount").textContent=records.reduce((n,r)=>n+(r.issues||[]).length,0);
+  renderRecords();
+}
+function go(page){
+  document.querySelectorAll(".page").forEach(x=>x.classList.remove("active"));
+  $(page).classList.add("active");
+  document.querySelectorAll("nav button").forEach(x=>x.classList.remove("active"));
+  const n=$("nav-"+page); if(n)n.classList.add("active");
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+function num(id){const v=parseFloat($(id).value);return Number.isFinite(v)?v:null}
+function result(cls,title,text){return `<div class="result ${cls}"><strong>${title}</strong>${text}</div>`}
+
+function runCheck(){
+  const d=num("daily"), w=num("weekly"), f=num("fortnight"), sb=num("sinceBreak");
+  const br=$("breakTaken").value, dr=num("dailyRest"), rr=num("reducedRests"), wr=num("weeklyRest");
+  lastResults=[];
+  function add(type,title,text){lastResults.push({type,title,text})}
+  if(d!==null){
+    if(d>10)add("bad","Daily driving over 10 hours",`Entered ${d.toFixed(2)} hours. This exceeds the normal 10-hour maximum even where an extension is used.`);
+    else if(d>9 && $("dailyExt").value!=="yes")add("bad","Daily driving over 9 hours",`Entered ${d.toFixed(2)} hours without marking a 10-hour extension.`);
+    else if(d>9)add("warn","10-hour daily extension",`Entered ${d.toFixed(2)} hours. Check that this is one of the no more than two permitted extensions in the fixed week.`);
+    else add("ok","Daily driving","No daily-driving figure above the selected limit.");
+  }
+  if(w!==null)add(w>56?"bad":"ok",w>56?"Weekly driving over 56 hours":"Weekly driving",w>56?`Entered ${w.toFixed(2)} hours.`:`Entered ${w.toFixed(2)} hours.`);
+  if(f!==null)add(f>90?"bad":"ok",f>90?"Two-week driving over 90 hours":"Two-week driving",f>90?`Entered ${f.toFixed(2)} hours.`:`Entered ${f.toFixed(2)} hours.`);
+  if(sb!==null){
+    if(sb>4.5 && br!=="45" && br!=="split") add("bad","Break issue flagged",`Driving since the last qualifying break is ${sb.toFixed(2)} hours. A qualifying 45-minute break should have been completed by 4.5 hours.`);
+    else if(sb>4.5)add("warn","Review break sequence","The figure is over 4.5 hours, but a qualifying break is marked. Review the exact tachograph sequence.");
+    else add("ok","Break position","No break issue is flagged by the entered driving figure.");
+  }
+  if(dr!==null){
+    if(dr<9)add("bad","Daily rest below 9 hours",`Entered ${dr.toFixed(2)} hours. This is below the reduced daily-rest minimum.`);
+    else if(dr<11){
+      if(rr===null || rr<1)add("warn","Reduced daily rest","Rest is below 11 hours. Check that this reduction is permitted and that the total number of reductions between weekly rests does not exceed 3.");
+      else if(rr>3)add("bad","Too many reduced daily rests","The entered reduction count is ${rr}, above the permitted 3 between weekly rests.");
+      else add("warn","Reduced daily rest",`Entered ${dr.toFixed(2)} hours with ${rr} reduced rest(s) recorded.`);
+    } else add("ok","Daily rest","No daily-rest minimum issue is flagged.");
+  }
+  if(wr!==null){
+    if(wr<24)add("bad","Weekly rest below 24 hours",`Entered ${wr.toFixed(2)} hours. This is below the reduced weekly-rest minimum.`);
+    else if(wr<45)add("warn","Reduced weekly rest",`Entered ${wr.toFixed(2)} hours. Check the required compensation and the two-week weekly-rest pattern.`);
+    else add("ok","Weekly rest","Regular weekly-rest duration is entered.");
+  }
+  if(!lastResults.length)add("warn","Not enough data","Enter at least one figure to run a useful check.");
+  $("resultList").innerHTML=lastResults.map(x=>result(x.type,x.title,x.text)).join("");
+  $("checkResults").style.display="block";
+}
+function clearCheck(){
+  ["daily","weekly","fortnight","sinceBreak","dailyRest","reducedRests","weeklyRest"].forEach(id=>$(id).value="");
+  $("breakTaken").value="none";$("dailyExt").value="no";$("checkResults").style.display="none";lastResults=[];
+}
+function saveCurrent(){
+  if(!lastResults.length){runCheck();if(!lastResults.length)return}
+  const r={id:Date.now(),date:$("cDate").value||new Date().toISOString().slice(0,10),savedAt:new Date().toLocaleString(),inputs:{
+    daily:num("daily"),weekly:num("weekly"),fortnight:num("fortnight"),sinceBreak:num("sinceBreak"),
+    breakTaken:$("breakTaken").value,dailyRest:num("dailyRest"),reducedRests:num("reducedRests"),weeklyRest:num("weeklyRest")
+  },issues:lastResults.filter(x=>x.type!=="ok"),all:lastResults,evidence:JSON.parse(localStorage.getItem("INFRINGE_NOW_HGV_EVIDENCE")||"{}")};
+  records.unshift(r);saveAll();go("records");alert("Check saved.");
+}
+function renderRecords(){
+  const el=$("recordsList");
+  if(!records.length){el.innerHTML='<p class="muted">No saved checks yet.</p>';return}
+  el.innerHTML=records.map(r=>`<div class="record"><h3>${r.date}</h3><div class="meta">Saved ${r.savedAt}</div><p><b>${(r.issues||[]).length}</b> potential issue(s) flagged.</p><div class="actions"><button class="small secondary" onclick="showRecord(${r.id})">View</button><button class="small danger" onclick="deleteRecord(${r.id})">Delete</button></div></div>`).join("");
+}
+function showRecord(id){
+  const r=records.find(x=>x.id===id);if(!r)return;
+  const lines=(r.all||[]).map(x=>result(x.type,x.title,x.text)).join("");
+  const w=window.open("","_blank"); if(!w)return alert("Please allow pop-ups to view the report.");
+  w.document.write(`<html><head><title>Infringe Now HGV report</title><meta name="viewport" content="width=device-width,initial-scale=1"><style>body{font-family:Arial;padding:20px;max-width:700px;margin:auto;color:#17202b}.result{padding:12px;margin:8px 0;border-radius:10px;border:1px solid #ddd}.ok{background:#edf9f1}.warn{background:#fff7e8}.bad{background:#fff0f0}</style></head><body><h1>INFRINGE NOW HGV</h1><h2>Compliance check: ${r.date}</h2><p>Saved ${r.savedAt}</p>${lines}<hr><p><b>Driver-first note:</b> This report records what was entered and flags potential issues. It is not a legal finding. Review the complete tachograph record and applicable rules.</p></body></html>`);w.document.close();
+}
+function deleteRecord(id){if(confirm("Delete this record?")){records=records.filter(r=>r.id!==id);saveAll()}}
+function clearRecords(){if(confirm("Delete ALL saved records?")){records=[];saveAll()}}
+function exportRecords(){
+  const blob=new Blob([JSON.stringify(records,null,2)],{type:"application/json"});
+  const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="infringe-now-hgv-records.json";a.click();URL.revokeObjectURL(a.href);
+}
+function saveEvidence(){
+  const obj={note:$("evidenceNote").value,name:$("evidenceName").value,savedAt:new Date().toLocaleString()};
+  localStorage.setItem("INFRINGE_NOW_HGV_EVIDENCE",JSON.stringify(obj));
+  $("evidenceSaved").style.display="block";$("evidenceSaved").textContent="Evidence note saved locally on this device.";
+}
+$("cDate").value=new Date().toISOString().slice(0,10);
+updateStats();
+</script>
+</body>
+</html>
