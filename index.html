@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#071018">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>Infringe Now HGV</title>
+<style>
+:root{--bg:#071018;--panel:#0d1a23;--panel2:#13252e;--line:#2b424d;--green:#74cf7a;--green2:#a5e7a9;--text:#f7fafb;--muted:#9eacb6;--red:#ff7070;--amber:#ffc857}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}.app{max-width:1050px;margin:auto;padding:15px 13px 105px}
+header{display:flex;align-items:center;justify-content:space-between;margin-bottom:15px}.brand{display:flex;align-items:center;gap:11px}.logo{width:53px;height:53px;border-radius:16px;border:1px solid #31505b;background:#10221d;display:grid;place-items:center}.logo b{color:var(--green);font-size:23px}.brand h1{margin:0;font-size:18px;font-weight:900}.brand small{color:var(--muted)}.badge{font-size:11px;font-weight:800;color:var(--green2);background:#10251a;border:1px solid #315a3a;border-radius:99px;padding:8px 10px}
+.hero,.panel,.card{background:var(--panel);border:1px solid var(--line);border-radius:22px}.hero{padding:25px;background:linear-gradient(145deg,#10252e,#0b151d);position:relative;overflow:hidden}.hero h2{font-size:clamp(35px,7vw,57px);line-height:.98;margin:0}.hero h2 span{color:var(--green)}.hero p{max-width:700px;color:#b8c4cc;line-height:1.55;margin:17px 0 21px}.actions{display:flex;gap:9px;flex-wrap:wrap}.btn{border:0;border-radius:13px;padding:13px 16px;font-weight:900;cursor:pointer}.primary{background:var(--green);color:#071018}.secondary{background:#172a34;color:#fff;border:1px solid #35505c}.danger{background:#35171b;color:#ff9999;border:1px solid #6b3037}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;margin-top:14px}.card{padding:17px}.ico{width:41px;height:41px;border-radius:13px;background:#123022;color:var(--green);display:grid;place-items:center;font-size:20px;margin-bottom:11px}.card h3{margin:0 0 6px}.card p,.muted{color:var(--muted);font-size:13px;line-height:1.5}
+.section{margin-top:27px;scroll-margin-top:15px}.head{display:flex;justify-content:space-between;align-items:end;margin-bottom:10px}.head h2{margin:0;font-size:24px}.head span{color:var(--muted);font-size:12px}.panel{padding:17px}
+.fields{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}label{display:block;font-size:12px;font-weight:800;color:#ccd5da;margin-bottom:6px}input,textarea{width:100%;background:#08131a;color:#fff;border:1px solid #2d4652;border-radius:11px;padding:12px;outline:none;font:inherit}textarea{min-height:85px}input:focus,textarea:focus{border-color:var(--green)}
+.result{display:none;margin-top:12px;padding:14px;border-radius:14px}.result.show{display:block}.good{background:#10251a;border:1px solid #315a3a}.bad{background:#2d1519;border:1px solid #713039}.warn{background:#2c2411;border:1px solid #745d22}.result strong{display:block;margin-bottom:5px}.result p{margin:0;color:#cbd4d9;font-size:13px;line-height:1.45}
+.scan{display:grid;grid-template-columns:1fr 1fr;gap:12px}.drop{min-height:270px;border:1.5px dashed #3d6170;border-radius:17px;background:#09151d;display:grid;place-items:center;text-align:center;padding:20px}.drop h3{margin:9px 0 7px}.drop p{color:var(--muted);font-size:13px;line-height:1.5}.filelabel{display:inline-block;background:var(--green);color:#071018;border-radius:12px;padding:12px 15px;font-weight:900;cursor:pointer;margin:4px}.filelabel input{display:none}.preview{display:none;width:100%;max-height:330px;object-fit:contain;background:#050b10;border:1px solid var(--line);border-radius:14px;margin-top:10px}.scanbar{display:none;gap:8px;flex-wrap:wrap;margin-top:10px}.scanbar.show{display:flex}.status{font-size:12px;color:var(--muted);line-height:1.45;margin-top:10px}.progress{display:none;height:8px;background:#071018;border-radius:99px;overflow:hidden;margin-top:8px}.progress.show{display:block}.progress i{display:block;height:100%;width:0;background:var(--green);transition:width .2s}.ocr{display:none;margin-top:12px}.ocr.show{display:block}.ocr pre{white-space:pre-wrap;max-height:250px;overflow:auto;background:#071018;border:1px solid var(--line);border-radius:12px;padding:11px;font-size:12px;line-height:1.45}
+.steps{display:grid;gap:8px}.step{background:#09151d;border:1px solid var(--line);border-radius:14px;padding:13px}.step b{display:block;color:var(--green2);margin-bottom:4px}.rules{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}.rule{background:#09151d;border:1px solid var(--line);border-radius:14px;padding:13px}.rule b{display:block;color:var(--green2);margin-bottom:4px}.rule span{font-size:12px;color:var(--muted);line-height:1.4}
+.recordForm{display:grid;grid-template-columns:1fr 1fr;gap:9px}.recordForm textarea{grid-column:1/-1}.records{display:grid;gap:8px;margin-top:11px}.record{background:#09151d;border:1px solid var(--line);border-radius:13px;padding:12px}.recordtop{display:flex;justify-content:space-between;gap:10px}.record small{color:var(--muted)}.record p{font-size:13px;color:#c9d2d7;white-space:pre-wrap}
+.empty{text-align:center;color:var(--muted);padding:18px;border:1px dashed var(--line);border-radius:13px}
+.nav{position:fixed;z-index:20;left:50%;bottom:12px;transform:translateX(-50%);width:min(650px,calc(100% - 24px));background:#0b171fee;border:1px solid #2b424d;border-radius:19px;padding:6px;display:grid;grid-template-columns:repeat(5,1fr);gap:3px;backdrop-filter:blur(16px);box-shadow:0 15px 45px #0008}.nav button{border:0;background:transparent;color:#91a0aa;border-radius:13px;padding:8px 3px;font-size:10px;font-weight:800;cursor:pointer}.nav button.active{background:#163321;color:var(--green2)}
+.toast{position:fixed;z-index:30;top:14px;left:50%;transform:translate(-50%,-150%);background:#13252e;border:1px solid #31505d;border-radius:12px;padding:10px 14px;transition:.25s;font-size:13px}.toast.show{transform:translate(-50%,0)}
+footer{text-align:center;color:#71808a;font-size:11px;margin-top:28px}.footerBrand{color:var(--green);font-weight:900}
+@media(max-width:760px){.cards,.fields,.scan,.rules{grid-template-columns:1fr}.recordForm{grid-template-columns:1fr}.recordForm textarea{grid-column:auto}.badge{display:none}.hero{padding:21px}}
+</style>
+</head>
+<body>
+<div class="app">
+<header>
+<div class="brand"><div class="logo"><b>IN</b></div><div><h1>INFRINGE NOW HGV</h1><small>Driver compliance, simplified.</small></div></div>
+<div class="badge">LIVE PROTOTYPE</div>
+</header>
+
+<section class="hero" id="home">
+<h2>Know your hours.<br><span>Spot infringements.</span></h2>
+<p>A simple HGV driver's-hours companion. Check figures, photograph or upload tachograph printouts, review results and keep notes on your phone.</p>
+<div class="actions"><button class="btn primary" data-target="check">✓ Start a compliance check</button><button class="btn secondary" data-target="scan">▣ Scan printout</button></div>
+</section>
+
+<section class="cards">
+<div class="card"><div class="ico">✓</div><h3>Compliance checker</h3><p>Screen daily, weekly and two-week driving figures against basic thresholds.</p></div>
+<div class="card"><div class="ico">▣</div><h3>Printout scanner</h3><p>Use your camera or upload a photo, then read the image with OCR.</p></div>
+<div class="card"><div class="ico">▤</div><h3>Driver records</h3><p>Save useful notes locally on your device while testing the app.</p></div>
+</section>
+
+<section class="section" id="check">
+<div class="head"><h2>Compliance check</h2><span>Screening tool</span></div>
+<div class="panel">
+<div class="fields">
+<div><label>Driving today</label><input id="daily" type="number" min="0" step=".1" placeholder="Hours"></div>
+<div><label>Driving this week</label><input id="weekly" type="number" min="0" step=".1" placeholder="Hours"></div>
+<div><label>Driving over 2 weeks</label><input id="fortnight" type="number" min="0" step=".1" placeholder="Hours"></div>
+</div>
+<div class="actions" style="margin-top:12px"><button class="btn primary" id="checkBtn">Check figures</button><button class="btn secondary" id="clearBtn">Clear</button></div>
+<div id="checkResult" class="result"></div>
+</div>
+</section>
+
+<section class="section" id="scan">
+<div class="head"><h2>Scan printout</h2><span>Camera + OCR</span></div>
+<div class="scan">
+<div class="panel">
+<div class="drop">
+<div>
+<div style="font-size:44px">📄</div>
+<h3>Choose a tachograph printout</h3>
+<p>On your iPhone, use Camera to take a new photo, or Photo to select one already on your phone.</p>
+<label class="filelabel">📷 Camera<input id="camera" type="file" accept="image/*" capture="environment"></label>
+<label class="filelabel">🖼️ Photo<input id="photo" type="file" accept="image/*"></label>
+</div>
+</div>
+<img id="preview" class="preview" alt="Printout preview">
+<div id="scanbar" class="scanbar"><button class="btn primary" id="readBtn">🔎 Read printout</button><button class="btn secondary" id="againBtn">Choose another</button></div>
+<div id="progress" class="progress"><i id="progressbar"></i></div>
+<div id="status" class="status">No printout selected.</div>
+</div>
+<div class="panel">
+<h3 style="margin-top:0">Scanner steps</h3>
+<div class="steps">
+<div class="step"><b>1. Capture</b><span class="muted">Get the printout sharp, bright and filling the photo.</span></div>
+<div class="step"><b>2. Read</b><span class="muted">OCR attempts to read the printed text.</span></div>
+<div class="step"><b>3. Verify</b><span class="muted">Never rely on OCR alone. Compare every figure with the original.</span></div>
+<div class="step"><b>4. Check</b><span class="muted">Use verified figures in the compliance checker.</span></div>
+</div>
+<div id="ocr" class="ocr"><h4>OCR text</h4><pre id="ocrtext"></pre><button class="btn secondary" id="toCheck">Go to checker</button></div>
+</div>
+</div>
+</section>
+
+<section class="section" id="records">
+<div class="head"><h2>Driver records</h2><span>Stored on this device</span></div>
+<div class="panel">
+<div class="recordForm"><input id="recordTitle" placeholder="Record title"><input id="recordDate" type="date"><textarea id="recordNote" placeholder="Notes or figures..."></textarea></div>
+<div class="actions" style="margin-top:10px"><button class="btn primary" id="saveRecord">Save record</button><button class="btn danger" id="deleteRecords">Delete all</button></div>
+<div id="recordsList" class="records"></div>
+</div>
+</section>
+
+<section class="section" id="rules">
+<div class="head"><h2>Key rules</h2><span>Quick guide</span></div>
+<div class="panel rules">
+<div class="rule"><b>Daily driving</b><span>Normally up to 9 hours, with permitted extensions to 10 hours on limited days.</span></div>
+<div class="rule"><b>Weekly driving</b><span>Maximum 56 hours in a week.</span></div>
+<div class="rule"><b>Two-week total</b><span>Maximum 90 hours across two consecutive weeks.</span></div>
+<div class="rule"><b>4.5-hour rule</b><span>Required break after no more than 4.5 hours of driving.</span></div>
+<div class="rule"><b>Daily rest</b><span>Daily rest has specific requirements and exceptions.</span></div>
+<div class="rule"><b>Weekly rest</b><span>Regular and reduced weekly rest have specific requirements and exceptions.</span></div>
+</div>
+</section>
+
+<section class="section" id="about">
+<div class="head"><h2>About</h2><span>Infringe Now HGV</span></div>
+<div class="panel"><h3>Built by Kevin Watts</h3><p class="muted">Infringe Now HGV started as a practical idea from the HGV driving world: make compliance information easier to access, understand and check on a phone.</p><p class="muted">This is a working prototype and a screening aid, not a legal determination.</p></div>
+</section>
+
+<footer><span class="footerBrand">INFRINGE NOW HGV</span> • Developer Kevin Watts • Working prototype</footer>
+</div>
+
+<nav class="nav">
+<button data-nav="home" class="active">⌂<br>Home</button>
+<button data-nav="check">✓<br>Check</button>
+<button data-nav="scan">▣<br>Scan</button>
+<button data-nav="records">▤<br>Records</button>
+<button data-nav="about">ⓘ<br>About</button>
+</nav>
+<div id="toast" class="toast"></div>
+
+<script>
+/* INFRINGE NOW HGV
+   Stable core: no external code is loaded until OCR is actually requested.
+*/
+(function(){
+"use strict";
+var file=null;
+
+function $(id){return document.getElementById(id)}
+function message(text){
+ var t=$("toast");t.textContent=text;t.classList.add("show");
+ clearTimeout(window._toast);window._toast=setTimeout(function(){t.classList.remove("show")},2300);
+}
+function go(id){
+ var el=$(id);if(el)el.scrollIntoView({behavior:"smooth",block:"start"});
+ var bs=document.querySelectorAll("[data-nav]");
+ for(var i=0;i<bs.length;i++)bs[i].classList.toggle("active",bs[i].getAttribute("data-nav")===id);
+}
+var targets=document.querySelectorAll("[data-target]");
+for(var i=0;i<targets.length;i++)targets[i].addEventListener("click",function(){go(this.getAttribute("data-target"))});
+var nav=document.querySelectorAll("[data-nav]");
+for(var j=0;j<nav.length;j++)nav[j].addEventListener("click",function(){go(this.getAttribute("data-nav"))});
+
+$("checkBtn").addEventListener("click",function(){
+ var d=parseFloat($("daily").value),w=parseFloat($("weekly").value),f=parseFloat($("fortnight").value);
+ var r=$("checkResult"),any=Number.isFinite(d)||Number.isFinite(w)||Number.isFinite(f);
+ if(!any){r.className="result show warn";r.innerHTML="<strong>Enter your figures</strong><p>Add at least one figure to run the check.</p>";return}
+ var issues=[];
+ if(Number.isFinite(d)&&d>10)issues.push("Daily driving is above 10 hours.");
+ if(Number.isFinite(w)&&w>56)issues.push("Weekly driving is above 56 hours.");
+ if(Number.isFinite(f)&&f>90)issues.push("Two-week driving is above 90 hours.");
+ if(issues.length){r.className="result show bad";r.innerHTML="<strong>Potential threshold issue</strong><p>"+issues.join(" ")+" Verify the full circumstances and current official rules.</p>";message("Potential issue found");}
+ else{r.className="result show good";r.innerHTML="<strong>No basic threshold issue detected</strong><p>The figures are within the basic thresholds used by this prototype. This is a screening aid, not a legal determination.</p>";message("Check complete ✓")}
+});
+$("clearBtn").addEventListener("click",function(){$("daily").value="";$("weekly").value="";$("fortnight").value="";$("checkResult").className="result";$("checkResult").innerHTML=""});
+
+function choose(f){
+ if(!f){return}
+ if(!f.type||f.type.indexOf("image/")!==0){message("Please choose an image");return}
+ file=f;
+ $("preview").src=URL.createObjectURL(f);$("preview").style.display="block";
+ $("scanbar").className="scanbar show";$("status").textContent="Printout selected. Check the preview, then tap Read printout.";
+ $("ocr").className="ocr";$("progress").className="progress";$("progressbar").style.width="0%";
+}
+$("camera").addEventListener("change",function(){choose(this.files[0])});
+$("photo").addEventListener("change",function(){choose(this.files[0])});
+$("againBtn").addEventListener("click",function(){$("camera").value="";$("photo").value="";file=null;$("preview").style.display="none";$("scanbar").className="scanbar";$("ocr").className="ocr";$("progress").className="progress";$("status").textContent="No printout selected."});
+
+function loadOCR(){
+ return new Promise(function(resolve,reject){
+  if(window.Tesseract){resolve();return}
+  var s=document.createElement("script");s.src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js";s.async=true;
+  s.onload=function(){resolve()};s.onerror=function(){reject(new Error("OCR engine could not load. Check your internet connection."))};
+  document.head.appendChild(s);
+ });
+}
+$("readBtn").addEventListener("click",async function(){
+ if(!file){message("Choose a printout first");return}
+ var b=$("readBtn");b.disabled=true;b.textContent="🔎 Reading...";
+ $("progress").className="progress show";$("progressbar").style.width="3%";$("status").textContent="Loading scanner engine...";
+ try{
+  await loadOCR();
+  var worker=await Tesseract.createWorker("eng",1,{logger:function(x){if(x&&typeof x.progress==="number"){$("progressbar").style.width=Math.max(3,Math.round(x.progress*100))+"%";$("status").textContent=(x.status||"Reading")+" "+Math.round(x.progress*100)+"%"}}});
+  try{
+   await worker.setParameters({tessedit_pageseg_mode:"6"});
+   var result=await worker.recognize(file);
+   var text=(result.data&&result.data.text?result.data.text:"").trim();
+   $("ocr").className="ocr show";$("ocrtext").textContent=text||"No clear text found. Try a sharper, brighter photo.";
+   $("progressbar").style.width="100%";$("status").textContent="OCR complete. Verify all figures against the original printout.";message("OCR complete ✓");
+  }finally{await worker.terminate()}
+ }catch(e){
+  $("ocr").className="ocr show";$("ocrtext").textContent="OCR could not run. You can still use the Compliance Checker manually.\n\nReason: "+(e.message||e);
+  $("status").textContent="Scanner unavailable. Try again with an internet connection.";
+  message("Scanner unavailable");
+ }finally{b.disabled=false;b.textContent="🔎 Read printout"}
+});
+$("toCheck").addEventListener("click",function(){go("check");message("Check the figures manually")});
+
+function today(){var d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
+$("recordDate").value=today();
+function records(){try{return JSON.parse(localStorage.getItem("INFRINGE_NOW_RECORDS")||"[]")}catch(e){return[]}}
+function render(){
+ var a=records(),list=$("recordsList");
+ if(!a.length){list.innerHTML='<div class="empty">No saved records yet.</div>';return}
+ list.innerHTML="";
+ for(var i=a.length-1;i>=0;i--){var r=document.createElement("div");r.className="record";r.innerHTML='<div class="recordtop"><strong></strong><small></small></div><p></p>';r.querySelector("strong").textContent=a[i].title||"Untitled";r.querySelector("small").textContent=a[i].date||"";r.querySelector("p").textContent=a[i].note||"";list.appendChild(r)}
+}
+render();
+$("saveRecord").addEventListener("click",function(){
+ var title=$("recordTitle").value.trim(),note=$("recordNote").value.trim();
+ if(!title&&!note){message("Add a title or note first");return}
+ var a=records();a.push({title:title,date:$("recordDate").value,note:note});localStorage.setItem("INFRINGE_NOW_RECORDS",JSON.stringify(a));
+ $("recordTitle").value="";$("recordNote").value="";render();message("Record saved ✓");
+});
+$("deleteRecords").addEventListener("click",function(){if(records().length&&confirm("Delete all saved records?")){localStorage.removeItem("INFRINGE_NOW_RECORDS");render();message("Records deleted")}});
+
+})();
+</script>
+</body>
+</html>
