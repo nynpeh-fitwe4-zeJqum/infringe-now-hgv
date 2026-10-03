@@ -4,275 +4,171 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#071018">
-<title>Infringe Now HGV V2</title>
-<script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+<title>Infringe Now HGV</title>
 <style>
-:root{--navy:#071018;--ink:#17202b;--muted:#687487;--line:#d9e0e8;--green:#74c879;--blue:#eaf0ff;--red:#b3261e;--white:#fff}
-*{box-sizing:border-box}
-body{margin:0;background:#f7f8fa;color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
-.app{max-width:560px;margin:auto;min-height:100vh;background:#fff;padding-bottom:86px}
-header{background:var(--navy);color:#fff;padding:28px 18px 24px}
-.brand{font-size:25px;font-weight:900;letter-spacing:.4px}
-.tag{font-size:16px;font-weight:800;color:#b8c1cf;margin-top:5px}
-main{padding:18px 16px}
-h1{font-size:34px;line-height:1.05;margin:8px 0 12px}
-h2{font-size:25px;margin:0 0 12px}
-h3{font-size:18px;margin:0 0 8px}
-p{color:var(--muted);font-weight:650;line-height:1.45}
-.card{border:2px solid var(--line);border-radius:24px;padding:18px;margin-bottom:16px}
-.stats{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.stat{background:#f0f3f7;border-radius:22px;padding:20px 16px}
-.stat b{display:block;font-size:46px;line-height:1}
-.stat span{display:block;margin-top:10px;color:var(--muted);font-size:16px;font-weight:800}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-label{display:block;font-weight:850;margin:8px 0}
-input,select{width:100%;padding:16px;border:2px solid var(--line);border-radius:16px;font-size:18px;background:#fff}
-button{border:0;border-radius:16px;padding:15px 18px;font-size:17px;font-weight:900;cursor:pointer}
-.primary{background:var(--green);color:#102016}
-.secondary{background:var(--blue);color:#315da8}
-.dark{background:var(--navy);color:#fff}
-.outline{background:#fff;border:2px solid var(--line)}
-button:disabled{opacity:.5}
-.scanbox{background:#f3f6fa;border:2px dashed #b9c4d1;border-radius:20px;padding:16px;text-align:center}
-.scanbox .icon{font-size:44px}
-.preview{display:none;width:100%;max-height:320px;object-fit:contain;border-radius:16px;margin:12px 0;background:#101820}
-.progress{display:none;margin-top:12px}
-.progressbar{height:10px;background:#dde4ec;border-radius:10px;overflow:hidden}
-.progressbar div{height:100%;width:0;background:#74c879;transition:width .2s}
-.status{font-size:14px;color:var(--muted);font-weight:800;margin-top:7px}
-.result{margin-top:14px;padding:16px;border-radius:18px;display:none}
-.result.ok{display:block;background:#e9f7eb;border:2px solid #a9d9ae}
-.result.warn{display:block;background:#fff1ef;border:2px solid #efb2ad}
-.issue{padding:12px 0;border-bottom:1px solid #d7dde5}
-.issue:last-child{border-bottom:0}
-.small{font-size:13px}
-.notice{background:#fff8df;border:2px solid #efd57c;border-radius:16px;padding:13px;color:#604c00;font-weight:750}
-nav{position:fixed;bottom:0;left:0;right:0;max-width:560px;margin:auto;background:#071018;color:#cbd3df;display:grid;grid-template-columns:repeat(4,1fr);padding:10px 4px calc(10px + env(safe-area-inset-bottom));z-index:10}
-nav button{background:none;color:inherit;padding:8px 3px;font-size:13px}
-nav button.active{color:#74c879}
-.navicon{font-size:23px;display:block;margin-bottom:3px}
-.hidden{display:none!important}
-.file{display:none}
-hr{border:0;border-top:1px solid var(--line);margin:16px 0}
-ul{padding-left:22px;color:var(--muted);font-weight:650}
+:root{
+ --bg:#071018;--panel:#0e1a23;--panel2:#13232d;--green:#74c879;--green2:#9be29f;
+ --text:#f7fafb;--muted:#9eacb8;--line:#233743;--red:#ff6b6b;--amber:#ffc857;
+ --shadow:0 18px 50px rgba(0,0,0,.28);--r:20px;
+}
+*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+body{min-height:100vh}
+.app{max-width:1120px;margin:auto;padding:18px 16px 110px;position:relative;overflow:hidden}
+.watermark{position:fixed;right:-70px;top:22%;width:520px;height:300px;opacity:.035;pointer-events:none;z-index:0;display:flex;align-items:center;gap:18px;font-weight:900;transform:rotate(-8deg)}.watermark span{font-size:180px;color:#74c879}.watermark b{font-size:44px;line-height:.85;color:#fff;letter-spacing:2px}
+header,.content,.nav{position:relative;z-index:1}
+header{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:8px 0 20px}
+.brand{display:flex;align-items:center;gap:12px}
+.logoMark{width:54px;height:54px;border-radius:16px;background:linear-gradient(145deg,#182a34,#0b141b);border:1px solid #2a424d;display:grid;place-items:center;box-shadow:0 8px 25px #0005}
+.logoMark span{font-weight:900;font-size:24px;color:var(--green)}
+.brand h1{font-size:19px;line-height:1;margin:0;font-weight:900;letter-spacing:.3px}
+.brand small{display:block;color:var(--muted);margin-top:5px}
+.pill{border:1px solid #315040;background:#102419;color:var(--green2);padding:8px 11px;border-radius:999px;font-size:12px;font-weight:800}
+.hero{background:linear-gradient(145deg,#10222c,#0b151d);border:1px solid var(--line);border-radius:28px;padding:26px;box-shadow:var(--shadow);overflow:hidden;position:relative}
+.hero:after{content:"";position:absolute;right:-90px;top:-100px;width:330px;height:330px;border-radius:50%;background:radial-gradient(circle,#74c8791c,transparent 68%)}
+.hero h2{font-size:clamp(30px,5vw,54px);line-height:.98;margin:0 0 14px;max-width:760px}
+.hero h2 em{font-style:normal;color:var(--green)}
+.hero p{color:#b7c3cc;font-size:16px;line-height:1.55;max-width:720px;margin:0 0 22px}
+.actions{display:flex;flex-wrap:wrap;gap:10px}
+button,.btn{border:0;border-radius:14px;padding:13px 16px;font-weight:850;font-size:14px;cursor:pointer}
+.primary{background:var(--green);color:#071018;box-shadow:0 8px 25px #74c87924}
+.secondary{background:#172832;color:white;border:1px solid #2b424e}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:16px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:19px;box-shadow:0 12px 30px #0002}
+.card h3{margin:0 0 7px;font-size:17px}.card p{margin:0;color:var(--muted);line-height:1.5;font-size:13px}
+.icon{width:42px;height:42px;border-radius:13px;background:#132a22;color:var(--green);display:grid;place-items:center;font-size:20px;margin-bottom:13px}
+.section{margin-top:28px}.sectionHead{display:flex;justify-content:space-between;align-items:end;margin-bottom:12px}
+.sectionHead h2{margin:0;font-size:24px}.sectionHead span{color:var(--muted);font-size:12px}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:22px;padding:18px}
+label{display:block;color:#c7d0d6;font-size:12px;font-weight:800;margin:0 0 7px}
+.fields{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+input,select,textarea{width:100%;background:#09131a;color:white;border:1px solid #2a404b;border-radius:12px;padding:12px;font:inherit;outline:none}
+input:focus,select:focus,textarea:focus{border-color:var(--green);box-shadow:0 0 0 3px #74c87918}
+.result{margin-top:14px;padding:16px;border-radius:16px;border:1px solid var(--line);display:none}
+.result.good{display:block;background:#102419;border-color:#315a3a}.result.warn{display:block;background:#2b2411;border-color:#725b25}.result.bad{display:block;background:#2a1215;border-color:#6f2c33}
+.result strong{display:block;font-size:18px;margin-bottom:5px}.result p{margin:0;color:#c6cfd5;font-size:13px;line-height:1.45}
+.scan{display:grid;grid-template-columns:1.1fr .9fr;gap:14px}
+.drop{min-height:220px;border:1px dashed #3c5865;border-radius:18px;background:#0a151d;display:grid;place-items:center;text-align:center;padding:25px}
+.drop b{display:block;font-size:19px;margin:8px 0}.drop p{color:var(--muted);font-size:13px;margin:0 auto 14px;max-width:390px}
+.rules{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.rule{padding:14px;border:1px solid var(--line);border-radius:15px;background:#0a151d}.rule b{color:var(--green2);display:block;margin-bottom:5px}.rule span{font-size:12px;color:var(--muted);line-height:1.4}
+footer{text-align:center;color:#71818c;font-size:11px;margin:30px 0 0}.footerBrand{color:var(--green);font-weight:900}
+.nav{position:fixed;left:50%;bottom:15px;transform:translateX(-50%);width:min(620px,calc(100% - 28px));background:#0b171fef;border:1px solid #2a3e48;backdrop-filter:blur(18px);border-radius:19px;padding:7px;display:grid;grid-template-columns:repeat(4,1fr);gap:5px;box-shadow:0 15px 45px #0007}
+.nav button{background:transparent;color:#8e9ca6;padding:10px 5px;font-size:11px}.nav button.active{background:#163021;color:var(--green2)}
+.toast{position:fixed;top:18px;left:50%;transform:translate(-50%,-120px);background:#13232d;border:1px solid #315040;padding:11px 15px;border-radius:12px;z-index:10;transition:.25s;font-size:13px}.toast.show{transform:translate(-50%,0)}
+@media(max-width:760px){.grid,.fields,.scan,.rules{grid-template-columns:1fr}.hero{padding:21px}.hero h2{font-size:36px}.app{padding-left:12px;padding-right:12px}.pill{display:none}}
 </style>
 </head>
 <body>
+<div class="watermark" aria-hidden="true"><span>IN</span><b>INFRINGE<br>NOW HGV</b></div>
 <div class="app">
 <header>
-  <div class="brand">INFRINGE NOW HGV</div>
-  <div class="tag">Driver compliance &amp; tachograph checker</div>
+  <div class="brand">
+    <div class="logoMark"><span>IN</span></div>
+    <div><h1>INFRINGE NOW HGV</h1><small>Driver compliance, simplified.</small></div>
+  </div>
+  <div class="pill">● LIVE PROTOTYPE</div>
 </header>
 
-<main>
-<section id="home">
-  <h1>Driver compliance</h1>
-  <p>Check tachograph figures, identify potential infringements, save records and keep evidence together.</p>
-  <div class="stats">
-    <div class="stat"><b id="issueCount">0</b><span>Potential issues</span></div>
-    <div class="stat"><b id="recordCount">0</b><span>Saved records</span></div>
-  </div>
-  <div class="card" style="margin-top:16px">
-    <h2>Quick check</h2>
-    <p>Scan a tachograph printout or enter the figures manually. The result is a screening tool, not a legal finding.</p>
-    <div class="grid2">
-      <button class="primary" onclick="show('check')">✓ Start compliance check</button>
-      <button class="secondary" onclick="show('rules')">📚 Rule library</button>
-    </div>
+<main class="content">
+<section class="hero">
+  <h2>Know your hours.<br><em>Spot infringements.</em></h2>
+  <p>A mobile-first HGV compliance tool designed to help drivers check key drivers' hours figures, review potential issues and keep useful records in one place.</p>
+  <div class="actions">
+    <button class="primary" onclick="go('check')">✓ Start a compliance check</button>
+    <button class="secondary" onclick="go('scan')">▣ Scan printout</button>
   </div>
 </section>
 
-<section id="check" class="hidden">
-  <h2>Compliance check</h2>
-  <div class="card">
-    <h3>📸 Scan tachograph printout</h3>
-    <p>Take a clear photo of a printout or choose one from your Photos. OCR will try to read the figures. <b>Always check the extracted figures before relying on the result.</b></p>
-    <div class="scanbox">
-      <div class="icon">📄</div>
-      <p id="scanHint">Use a clear, straight-on photo with all figures visible.</p>
-      <input id="fileInput" class="file" type="file" accept="image/*" capture="environment">
-      <button class="primary" onclick="document.getElementById('fileInput').click()">📷 Scan / upload printout</button>
-      <img id="preview" class="preview" alt="Tachograph printout preview">
-      <div id="progress" class="progress">
-        <div class="progressbar"><div id="bar"></div></div>
-        <div id="ocrStatus" class="status">Preparing scan…</div>
-      </div>
-    </div>
-    <div id="ocrResult" class="result"></div>
-    <button id="useOcr" class="dark hidden" style="width:100%;margin-top:10px" onclick="useOcrFigures()">Use extracted figures below</button>
-  </div>
-
-  <div class="card">
-    <h3>✍️ Manual figures</h3>
-    <div class="notice small">For now, the scanner is an OCR assistant. Verify every figure against the original printout before saving a record.</div>
-    <label>Rule set</label>
-    <select id="ruleSet">
-      <option value="assimilated">Assimilated / AETR goods vehicle</option>
-      <option value="eu">EU / GB drivers' hours</option>
-    </select>
-    <div class="grid2">
-      <div><label>Driving today (hours)</label><input id="today" type="number" step="0.1" placeholder="e.g. 9"></div>
-      <div><label>Driving this week (hours)</label><input id="week" type="number" step="0.1" placeholder="e.g. 54"></div>
-      <div><label>Driving over 2 weeks (hours)</label><input id="twoWeeks" type="number" step="0.1" placeholder="e.g. 88"></div>
-      <div><label>Longest continuous driving (hours)</label><input id="continuous" type="number" step="0.1" placeholder="e.g. 4.6"></div>
-      <div><label>Daily rest (hours)</label><input id="dailyRest" type="number" step="0.1" placeholder="e.g. 10"></div>
-      <div><label>Weekly rest (hours)</label><input id="weeklyRest" type="number" step="0.1" placeholder="e.g. 42"></div>
-    </div>
-    <label>Break taken after 4.5h driving (minutes)</label>
-    <input id="break" type="number" step="1" placeholder="e.g. 45">
-    <button class="primary" style="width:100%;margin-top:14px" onclick="checkFigures()">✓ Check for potential infringements</button>
-    <div id="checkResult" class="result"></div>
-    <button id="saveBtn" class="dark hidden" style="width:100%;margin-top:10px" onclick="saveRecord()">💾 Save this record</button>
-  </div>
+<section class="grid">
+ <div class="card"><div class="icon">✓</div><h3>Compliance checker</h3><p>Enter your figures and quickly screen them against key drivers' hours thresholds.</p></div>
+ <div class="card"><div class="icon">▣</div><h3>Printout scanner</h3><p>Upload or photograph a printout and use OCR as an assistant to extract information for checking.</p></div>
+ <div class="card"><div class="icon">▤</div><h3>Keep records</h3><p>Keep useful checks and notes on the device while you test the workflow.</p></div>
 </section>
 
-<section id="rules" class="hidden">
-  <h2>Rule library</h2>
-  <div class="card">
-    <h3>Driving limits</h3>
-    <ul>
-      <li>Daily driving limit is generally 9 hours, extendable to 10 hours no more than twice in a week.</li>
-      <li>Weekly driving limit is generally 56 hours.</li>
-      <li>Two-week driving limit is generally 90 hours.</li>
-      <li>After 4.5 hours of driving, a qualifying break is normally required.</li>
-    </ul>
+<section id="check" class="section">
+ <div class="sectionHead"><h2>Compliance check</h2><span>Core prototype</span></div>
+ <div class="panel">
+  <div class="fields">
+   <div><label>Driving today (hours)</label><input id="daily" type="number" min="0" step=".1" placeholder="e.g. 8.5"></div>
+   <div><label>Driving this week (hours)</label><input id="weekly" type="number" min="0" step=".1" placeholder="e.g. 42"></div>
+   <div><label>Driving over 2 weeks (hours)</label><input id="fortnight" type="number" min="0" step=".1" placeholder="e.g. 76"></div>
   </div>
-  <div class="card">
-    <h3>Important</h3>
-    <p>Rules can vary by journey, vehicle and applicable regime. The library is provided for guidance and should be checked against current official rules.</p>
-  </div>
+  <div style="margin-top:14px"><button class="primary" onclick="checkHours()">Check figures</button></div>
+  <div id="result" class="result"></div>
+ </div>
 </section>
 
-<section id="records" class="hidden">
-  <h2>Saved records</h2>
-  <div id="recordsList"></div>
-  <button class="outline" style="width:100%;margin-top:10px" onclick="clearRecords()">Clear saved records</button>
+<section id="scan" class="section">
+ <div class="sectionHead"><h2>Scan printout</h2><span>OCR assistant</span></div>
+ <div class="scan">
+  <div class="drop">
+   <div><div style="font-size:36px">📄</div><b>Upload a tachograph printout</b><p>Take a clear photo or choose an image. The prototype can attempt to read the printout and you can then verify the figures manually.</p><input id="file" type="file" accept="image/*" onchange="scanFile()"></div>
+  </div>
+  <div class="panel">
+   <h3 style="margin-top:0">What happens next?</h3>
+   <div class="rule"><b>1. Read</b><span>OCR attempts to identify useful text and figures.</span></div><div style="height:8px"></div>
+   <div class="rule"><b>2. Verify</b><span>Always compare extracted information with the original printout.</span></div><div style="height:8px"></div>
+   <div class="rule"><b>3. Check</b><span>Send verified figures to the compliance checker.</span></div>
+   <div id="scanStatus" style="margin-top:13px;color:var(--muted);font-size:12px"></div>
+  </div>
+ </div>
+</section>
+
+<section id="rules" class="section">
+ <div class="sectionHead"><h2>Key rules reference</h2><span>Quick guide</span></div>
+ <div class="panel rules">
+  <div class="rule"><b>Daily driving</b><span>Normally up to 9 hours, with permitted extensions to 10 hours on limited days.</span></div>
+  <div class="rule"><b>Weekly driving</b><span>Maximum 56 hours in a week.</span></div>
+  <div class="rule"><b>Two-week total</b><span>Maximum 90 hours across two consecutive weeks.</span></div>
+  <div class="rule"><b>Continuous driving</b><span>A break is required after no more than 4.5 hours of driving.</span></div>
+  <div class="rule"><b>Daily rest</b><span>Use the checker as a screening aid and verify the circumstances against the full rules.</span></div>
+  <div class="rule"><b>Weekly rest</b><span>Regular and reduced weekly rest have specific requirements and exceptions.</span></div>
+ </div>
+</section>
+
+<section id="about" class="section">
+ <div class="sectionHead"><h2>About Infringe Now HGV</h2><span>Built for drivers</span></div>
+ <div class="panel">
+  <h3 style="margin-top:0">Developed by Kevin Watts</h3>
+  <p style="color:var(--muted);line-height:1.6">Infringe Now HGV started as a practical idea from the HGV driving world: make compliance information easier to access, understand and check on a phone.</p>
+  <p style="color:var(--muted);line-height:1.6;margin-bottom:0">Current version: working prototype. The next stages are real-driver testing, improved printout scanning, secure accounts and a full mobile-app experience.</p>
+ </div>
 </section>
 </main>
 
-<nav>
-  <button id="nav-home" class="active" onclick="show('home')"><span class="navicon">⌂</span>Home</button>
-  <button id="nav-check" onclick="show('check')"><span class="navicon">✓</span>Check</button>
-  <button id="nav-rules" onclick="show('rules')"><span class="navicon">📚</span>Rules</button>
-  <button id="nav-records" onclick="show('records')"><span class="navicon">▣</span>Records</button>
+<footer><span class="footerBrand">INFRINGE NOW HGV</span> • Developer Kevin Watts • Working prototype</footer>
+</div>
+
+<nav class="nav">
+ <button class="active" onclick="goTop()">⌂<br>Home</button>
+ <button onclick="go('check')">✓<br>Check</button>
+ <button onclick="go('scan')">▣<br>Scan</button>
+ <button onclick="go('about')">ⓘ<br>About</button>
 </nav>
+<div id="toast" class="toast"></div>
 
 <script>
-const $=id=>document.getElementById(id);
-let lastIssues=[], extracted={};
-
-function show(id){
-  ['home','check','rules','records'].forEach(x=>$(x).classList.toggle('hidden',x!==id));
-  ['home','check','rules','records'].forEach(x=>$('nav-'+x).classList.toggle('active',x===id));
-  if(id==='records') renderRecords();
-  window.scrollTo({top:0,behavior:'smooth'});
+function go(id){document.getElementById(id).scrollIntoView({behavior:'smooth',block:'start'});setTimeout(()=>window.scrollBy(0,-10),350)}
+function goTop(){window.scrollTo({top:0,behavior:'smooth'})}
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2400)}
+function checkHours(){
+ const d=parseFloat(document.getElementById('daily').value)||0;
+ const w=parseFloat(document.getElementById('weekly').value)||0;
+ const f=parseFloat(document.getElementById('fortnight').value)||0;
+ const r=document.getElementById('result');
+ const issues=[];
+ if(d>10) issues.push('Daily driving is above 10 hours.');
+ if(w>56) issues.push('Weekly driving is above 56 hours.');
+ if(f>90) issues.push('Two-week driving is above 90 hours.');
+ if(!d&&!w&&!f){r.className='result warn';r.innerHTML='<strong>Enter your figures</strong><p>Add at least one driving figure to run the screening check.</p>';return}
+ if(issues.length){r.className='result bad';r.innerHTML='<strong>Potential issue found</strong><p>'+issues.join(' ')+' Check the full circumstances and official rules before relying on this result.</p>'}
+ else {r.className='result good';r.innerHTML='<strong>No threshold issue detected</strong><p>The figures entered are within the basic screening thresholds used by this prototype. This is not a legal determination.</p>'}
 }
-
-$('fileInput').addEventListener('change', async e=>{
-  const file=e.target.files[0]; if(!file) return;
-  const url=URL.createObjectURL(file);
-  $('preview').src=url; $('preview').style.display='block';
-  $('progress').style.display='block'; $('useOcr').classList.add('hidden');
-  $('ocrResult').style.display='none'; $('bar').style.width='5%';
-  if(!window.Tesseract){
-    $('ocrStatus').textContent='OCR library did not load. You can still enter the figures manually.';
-    return;
-  }
-  try{
-    $('ocrStatus').textContent='Reading printout…';
-    const worker=await Tesseract.createWorker('eng',1,{logger:m=>{
-      if(m.status) $('ocrStatus').textContent=m.status;
-      if(typeof m.progress==='number') $('bar').style.width=Math.round(m.progress*100)+'%';
-    }});
-    const {data}=await worker.recognize(file);
-    await worker.terminate();
-    const text=data.text||'';
-    extracted=parseText(text);
-    $('bar').style.width='100%';
-    showOcrResult(text,extracted);
-  }catch(err){
-    $('ocrStatus').textContent='Could not read the printout. Try a clearer photo or use manual entry.';
-    $('ocrResult').className='result warn'; $('ocrResult').style.display='block';
-    $('ocrResult').innerHTML='<b>Scan needs another try.</b><p class="small">The image could not be read reliably. Use a brighter, straighter photo or enter the figures manually.</p>';
-  }
-});
-
-function nums(text){
-  return (text.match(/\\b\\d{1,3}(?:[\\.,]\\d)?\\b/g)||[]).map(x=>parseFloat(x.replace(',','.'))).filter(x=>Number.isFinite(x));
+function scanFile(){
+ const f=document.getElementById('file').files[0], s=document.getElementById('scanStatus');
+ if(!f){s.textContent='';return}
+ s.textContent='Printout selected. OCR can be added/used here, then verify every extracted figure against the original.';
+ toast('Printout loaded');
 }
-function parseText(text){
-  const n=nums(text);
-  const findAfter=(patterns,unit='h')=>{
-    const lines=text.split(/\\n/).map(x=>x.trim()).filter(Boolean);
-    for(const line of lines){
-      if(patterns.some(p=>p.test(line))){
-        const m=line.match(/(\\d{1,3}(?:[\\.,]\\d)?)/);
-        if(m) return parseFloat(m[1].replace(',','.'));
-      }
-    }
-    return '';
-  };
-  return {
-    today:findAfter([/driving today/i,/daily driving/i]),
-    week:findAfter([/driving this week/i,/weekly driving/i]),
-    twoWeeks:findAfter([/2\\s*weeks?/i,/two\\s*weeks?/i]),
-    continuous:findAfter([/continuous/i,/without break/i]),
-    dailyRest:findAfter([/daily rest/i,/daily\\s+rest/i]),
-    weeklyRest:findAfter([/weekly rest/i,/weekly\\s+rest/i]),
-    break:findAfter([/break/i])
-  };
-}
-function showOcrResult(text,x){
-  $('ocrResult').className='result ok'; $('ocrResult').style.display='block';
-  $('ocrResult').innerHTML='<b>Scan complete.</b><p class="small">OCR found some text. It is not guaranteed to map each number to the correct field, so please verify the figures below against the printout.</p><details><summary>Show raw OCR text</summary><pre style="white-space:pre-wrap;font-size:12px">'+escapeHtml(text)+'</pre></details>';
-  $('useOcr').classList.remove('hidden');
-  window.extracted=x;
-}
-function useOcrFigures(){
-  const x=window.extracted||{};
-  ['today','week','twoWeeks','continuous','dailyRest','weeklyRest','break'].forEach(k=>{
-    if(x[k]!=='' && x[k]!=null) $(k).value=x[k];
-  });
-  $('ocrResult').innerHTML+='<p><b>Figures copied into the form. Check them carefully before running the compliance check.</b></p>';
-  $('useOcr').classList.add('hidden');
-}
-function escapeHtml(s){return s.replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));}
-
-function val(id){const v=parseFloat($(id).value);return Number.isFinite(v)?v:null}
-function checkFigures(){
-  const t=val('today'), w=val('week'), tw=val('twoWeeks'), c=val('continuous'), dr=val('dailyRest'), wr=val('weeklyRest'), br=val('break');
-  const issues=[];
-  if(t!==null && t>10) issues.push('Daily driving exceeds 10 hours.');
-  else if(t!==null && t>9) issues.push('Daily driving is above 9 hours. This can only be permitted within the limited daily extensions.');
-  if(w!==null && w>56) issues.push('Weekly driving exceeds 56 hours.');
-  if(tw!==null && tw>90) issues.push('Driving over two weeks exceeds 90 hours.');
-  if(c!==null && c>4.5) issues.push('Longest continuous driving exceeds 4.5 hours without a qualifying break shown.');
-  if(br!==null && br<45) issues.push('The recorded break after 4.5 hours is below 45 minutes.');
-  if(dr!==null && dr<9) issues.push('Daily rest is below 9 hours and may require further review.');
-  if(wr!==null && wr<24) issues.push('Weekly rest is below 24 hours and requires further review.');
-  lastIssues=issues;
-  const box=$('checkResult');
-  box.className='result '+(issues.length?'warn':'ok'); box.style.display='block';
-  box.innerHTML=issues.length
-    ? '<b>⚠️ Potential issue(s) detected</b>'+issues.map(x=>'<div class="issue">'+escapeHtml(x)+'</div>').join('')+'<p class="small">This is a screening result, not a legal finding. Check the full tachograph record and applicable rules.</p>'
-    : '<b>✅ No potential infringement detected from the figures entered.</b><p class="small">This does not confirm legal compliance. The complete record and applicable exceptions still need to be considered.</p>';
-  $('saveBtn').classList.remove('hidden');
-  $('issueCount').textContent=issues.length;
-}
-function saveRecord(){
-  const rec={date:new Date().toLocaleString('en-GB'),issues:lastIssues,figures:Object.fromEntries(['today','week','twoWeeks','continuous','dailyRest','weeklyRest','break'].map(k=>[k,$(k).value]))};
-  const records=JSON.parse(localStorage.getItem('inhgv_records')||'[]'); records.unshift(rec);
-  localStorage.setItem('inhgv_records',JSON.stringify(records.slice(0,100))); renderRecords();
-  alert('Record saved on this device.');
-}
-function renderRecords(){
-  const records=JSON.parse(localStorage.getItem('inhgv_records')||'[]');
-  $('recordCount').textContent=records.length;
-  $('recordsList').innerHTML=records.length?records.map((r,i)=>`<div class="card"><h3>${r.issues.length?'⚠️ Potential issue':'✅ No potential issue'}</h3><p class="small">${escapeHtml(r.date)}</p><p>${r.issues.length?r.issues.map(escapeHtml).join('<br>'):'No potential infringement detected from the entered figures.'}</p></div>`).join(''):'<div class="card"><p>No saved records yet.</p></div>';
-}
-function clearRecords(){if(confirm('Clear saved records on this device?')){localStorage.removeItem('inhgv_records');renderRecords();}}
-renderRecords();
 </script>
-</div>
 </body>
 </html>
